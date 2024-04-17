@@ -1,0 +1,1 @@
+start "" "%homedrive%\mas\Markuse asjad"
