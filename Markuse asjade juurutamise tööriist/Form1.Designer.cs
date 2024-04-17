@@ -28,18 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.rootImageTimer = new System.Windows.Forms.Timer();
+            this.rootImageTimer = new System.Windows.Forms.Timer(this.components);
+            this.musicLoop = new System.Windows.Forms.Timer(this.components);
+            this.actionWaitTimer = new System.Windows.Forms.Timer(this.components);
+            this.checkEnable = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.musicLoop = new System.Windows.Forms.Timer();
-            this.actionWaitTimer = new System.Windows.Forms.Timer();
-            this.checkEnable = new System.Windows.Forms.Timer();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -103,6 +104,23 @@
             this.rootImageTimer.Interval = 200;
             this.rootImageTimer.Tick += new System.EventHandler(this.rootImageTimer_Tick);
             // 
+            // musicLoop
+            // 
+            this.musicLoop.Enabled = true;
+            this.musicLoop.Interval = 10851;
+            this.musicLoop.Tick += new System.EventHandler(this.musicLoop_Tick);
+            // 
+            // actionWaitTimer
+            // 
+            this.actionWaitTimer.Enabled = true;
+            this.actionWaitTimer.Interval = 1000;
+            this.actionWaitTimer.Tick += new System.EventHandler(this.actionWaitTimer_Tick);
+            // 
+            // checkEnable
+            // 
+            this.checkEnable.Enabled = true;
+            this.checkEnable.Tick += new System.EventHandler(this.checkEnable_Tick);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -125,27 +143,11 @@
             this.pictureBox2.TabIndex = 4;
             this.pictureBox2.TabStop = false;
             // 
-            // musicLoop
-            // 
-            this.musicLoop.Enabled = true;
-            this.musicLoop.Interval = 10851;
-            this.musicLoop.Tick += new System.EventHandler(this.musicLoop_Tick);
-            // 
-            // actionWaitTimer
-            // 
-            this.actionWaitTimer.Enabled = true;
-            this.actionWaitTimer.Interval = 1000;
-            this.actionWaitTimer.Tick += new System.EventHandler(this.actionWaitTimer_Tick);
-            // 
-            // checkEnable
-            // 
-            this.checkEnable.Enabled = true;
-            this.checkEnable.Tick += new System.EventHandler(this.checkEnable_Tick);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Desktop;
             this.ClientSize = new System.Drawing.Size(659, 530);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
@@ -154,12 +156,12 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label3);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.ForeColor = System.Drawing.SystemColors.Window;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Markuse arvuti juurutamise tööriist";
-            this.TopMost = true;
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
