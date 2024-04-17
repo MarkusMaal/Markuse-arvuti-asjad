@@ -29,8 +29,8 @@ namespace Markuse_arvuti_juhtpaneel
         string content;
         int mousex = 0;
         int mousey = 0;
-        string version = "1.04";
-        string whatnew = "+ Navigeerimisriba paigutamine keskele\n* Kiirem vahekaartide vahel navigeerimine\n* Kohatäite kuvamine, kui mingi taustapildi eelvaate laadimine ebaõnnestub\n";
+        string version = "1.05";
+        string whatnew = "+ Taustapilt arvuti juhtpaneelis";
         static pageSelect tabControl1 = new pageSelect();
         ListBox locationList = new ListBox();
         public controlForm()
@@ -114,6 +114,17 @@ namespace Markuse_arvuti_juhtpaneel
                 string[] bgs = bgfg[0].ToString().Split(':');
                 string[] fgs = bgfg[1].ToString().Split(':');
                 Applytheme(Color.FromArgb(Convert.ToInt32(bgs[0].ToString()), Convert.ToInt32(bgs[1].ToString()), Convert.ToInt32(bgs[2].ToString())), Color.FromArgb(Convert.ToInt32(fgs[0].ToString()), Convert.ToInt32(fgs[1].ToString()), Convert.ToInt32(fgs[2].ToString())));
+                if (this.BackgroundImage == null)
+                {
+                    Image img = Image.FromFile(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\bg_common.png");
+                    this.BackgroundImage = img;
+                }
+            }
+            catch (OutOfMemoryException)
+            {
+                System.Runtime.GCSettings.LargeObjectHeapCompactionMode = System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce;
+                GC.Collect();
+                this.BackgroundImage = null;
             }
             catch { }
         }
@@ -200,6 +211,10 @@ namespace Markuse_arvuti_juhtpaneel
             }
             this.BackColor = bg;
             this.ForeColor = fg;
+            button1.BackColor = Color.Transparent;
+            button2.BackColor = Color.Transparent;
+            button5.BackColor = Color.Transparent;
+            button3.BackColor = Color.Transparent;
             if (listBox1.Items.Count > 0) { setcolour(); }
             locationBox.BackColor = Color.White;
             locationBox.ForeColor = Color.Black;

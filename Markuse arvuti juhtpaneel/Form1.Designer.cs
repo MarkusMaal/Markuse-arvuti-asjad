@@ -177,6 +177,7 @@
             // 
             this.stuffLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.stuffLabel.BackColor = System.Drawing.Color.Transparent;
             this.stuffLabel.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.stuffLabel.Location = new System.Drawing.Point(10, 85);
             this.stuffLabel.Name = "stuffLabel";
@@ -1248,6 +1249,7 @@
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.button1.BackColor = System.Drawing.Color.Transparent;
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
@@ -1257,13 +1259,14 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "&Avaleht";
             this.toolTip1.SetToolTip(this.button1, "Kiirlingid põhilistele tööriistadele.");
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             this.button1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button3_KeyDown);
             // 
             // button2
             // 
             this.button2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.button2.BackColor = System.Drawing.Color.Transparent;
             this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Segoe UI", 8.25F);
@@ -1273,7 +1276,7 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "&MarkuStation";
             this.toolTip1.SetToolTip(this.button2, "Mänguhalduri (MarkuStation) konfigureerimine.");
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             this.button2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button3_KeyDown);
             this.button2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button2_MouseClick);
@@ -1281,6 +1284,7 @@
             // button3
             // 
             this.button3.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.button3.BackColor = System.Drawing.Color.Transparent;
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Segoe UI", 8.25F);
@@ -1290,13 +1294,14 @@
             this.button3.TabIndex = 3;
             this.button3.Text = "&Teave";
             this.toolTip1.SetToolTip(this.button3, "Teave arvuti, programmi ja Markuse asjade kohta.");
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             this.button3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button3_KeyDown);
             // 
             // button5
             // 
             this.button5.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.button5.BackColor = System.Drawing.Color.Transparent;
             this.button5.FlatAppearance.BorderSize = 0;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button5.Font = new System.Drawing.Font("Segoe UI", 8.25F);
@@ -1306,7 +1311,7 @@
             this.button5.TabIndex = 2;
             this.button5.Text = "&Konfiguratsioon";
             this.toolTip1.SetToolTip(this.button5, "Markuse arvuti asjade konfigureerimine.");
-            this.button5.UseVisualStyleBackColor = true;
+            this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.Button5_Click);
             this.button5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.button3_KeyDown);
             // 
@@ -1601,6 +1606,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImage = global::Markuse_arvuti_juhtpaneel.Properties.Resources.mas_web;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox1.Location = new System.Drawing.Point(422, 6);
@@ -1625,6 +1631,7 @@
             // button14
             // 
             this.button14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button14.BackColor = System.Drawing.Color.Transparent;
             this.button14.FlatAppearance.BorderSize = 0;
             this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button14.Location = new System.Drawing.Point(794, 24);
@@ -1633,7 +1640,7 @@
             this.button14.TabIndex = 15;
             this.button14.Text = "Alt + H = Kiirkla&hvid";
             this.button14.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.button14.UseVisualStyleBackColor = true;
+            this.button14.UseVisualStyleBackColor = false;
             this.button14.Visible = false;
             this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
@@ -1641,6 +1648,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(913, 637);
             this.Controls.Add(this.pageSelect_3);
             this.Controls.Add(this.pageSelect_4);
