@@ -50,7 +50,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 16F);
-            this.label1.Location = new System.Drawing.Point(92, 448);
+            this.label1.Location = new System.Drawing.Point(92, 484);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(150, 30);
             this.label1.TabIndex = 0;
@@ -61,19 +61,19 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label2.Location = new System.Drawing.Point(93, 478);
+            this.label2.Location = new System.Drawing.Point(95, 514);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(168, 19);
+            this.label2.Size = new System.Drawing.Size(128, 19);
             this.label2.TabIndex = 2;
-            this.label2.Text = "nullist juurutamise tööriist";
+            this.label2.Text = "juurutamise tööriist";
             // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.Font = new System.Drawing.Font("Segoe UI", 15F);
-            this.label3.Location = new System.Drawing.Point(12, 296);
+            this.label3.Location = new System.Drawing.Point(12, 314);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(635, 64);
+            this.label3.Size = new System.Drawing.Size(755, 64);
             this.label3.TabIndex = 3;
             this.label3.Text = "Teabe kogumine...";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -81,13 +81,14 @@
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.Location = new System.Drawing.Point(352, 448);
+            this.label4.Location = new System.Drawing.Point(490, 484);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(295, 70);
+            this.label4.Size = new System.Drawing.Size(277, 70);
             this.label4.TabIndex = 5;
-            this.label4.Text = "Juurutamise protsess võib kaua aega võtta.\r\nProtsessi käigus taaskäivitub arvuti " +
-    "automaatselt mitu korda.\r\nÄrge lülitage protsessi käigus käsitsi arvutit välja!";
+            this.label4.Text = "Juurutamise protsessi käigus võib programm hanguda mitmeks sekundiks. Olge kannat" +
+    "likud ja ärge programmi enne protsessi lõppu käsitsi sulgege!";
             this.label4.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.label4.Visible = false;
             // 
             // label5
             // 
@@ -125,7 +126,7 @@
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pictureBox1.Image = global::Markuse_asjade_juurutamise_tööriist.Properties.Resources.mas_general;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 448);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 484);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(74, 70);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -136,7 +137,7 @@
             // 
             this.pictureBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox2.Image = global::Markuse_asjade_juurutamise_tööriist.Properties.Resources.root_idc_search;
-            this.pictureBox2.Location = new System.Drawing.Point(253, 159);
+            this.pictureBox2.Location = new System.Drawing.Point(313, 177);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(143, 134);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -148,7 +149,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
-            this.ClientSize = new System.Drawing.Size(659, 530);
+            this.ClientSize = new System.Drawing.Size(779, 566);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox1);

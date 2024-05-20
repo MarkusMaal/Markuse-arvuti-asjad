@@ -366,9 +366,7 @@
             // 
             // flowLayoutPanel3
             // 
-            this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.flowLayoutPanel3.Controls.Add(this.edPanel);
             this.flowLayoutPanel3.Controls.Add(this.optPanel);
             this.flowLayoutPanel3.Controls.Add(this.label4);
@@ -432,11 +430,9 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label stuffLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RadioButton proRadioButton;
-        private System.Windows.Forms.RadioButton basicPlusRadioButton;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox itCheck;
@@ -450,15 +446,17 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel optPanel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.CheckBox TSCheck;
-        private System.Windows.Forms.CheckBox WXCheck;
-        private System.Windows.Forms.CheckBox GPCheck;
-        private System.Windows.Forms.CheckBox RMCheck;
-        private System.Windows.Forms.CheckBox CSCheck;
-        private System.Windows.Forms.CheckBox RDCheck;
-        private System.Windows.Forms.CheckBox LTCheck;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Timer blinkyTimer;
+        internal System.Windows.Forms.RadioButton basicPlusRadioButton;
+        internal System.Windows.Forms.CheckBox TSCheck;
+        internal System.Windows.Forms.CheckBox WXCheck;
+        internal System.Windows.Forms.CheckBox GPCheck;
+        internal System.Windows.Forms.CheckBox RMCheck;
+        internal System.Windows.Forms.CheckBox CSCheck;
+        internal System.Windows.Forms.CheckBox RDCheck;
+        internal System.Windows.Forms.CheckBox LTCheck;
+        internal System.Windows.Forms.Label stuffLabel;
     }
 }

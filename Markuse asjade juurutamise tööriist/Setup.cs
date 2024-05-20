@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -16,7 +17,7 @@ namespace Markuse_asjade_juurutamise_tööriist
     public partial class Setup : Form
     {
         bool laptop = false;
-        bool vpc = false;
+        public bool vpc = false;
 
 
 

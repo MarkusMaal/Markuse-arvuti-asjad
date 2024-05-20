@@ -27,7 +27,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Markuse arvuti kohtvõrk", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamSystem", "StreamSystem\StreamSystem.csproj", "{58007EE7-8B29-43B6-A529-C4E5AF3C7E40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Markuse asjade varundamistööriist", "Markuse asjade varundamistööriist\Markuse asjade varundamistööriist.csproj", "{BDAEBB96-88F6-4217-97D1-F08396B3CA46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Markuse asjade varundamistööriist", "Markuse asjade varundamistööriist\Markuse asjade varundamistööriist.csproj", "{BDAEBB96-88F6-4217-97D1-F08396B3CA46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Markuse arvuti lukustamissüsteem", "Markuse arvuti lukustamissüsteem\Markuse arvuti lukustamissüsteem.csproj", "{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -179,6 +181,18 @@ Global
 		{BDAEBB96-88F6-4217-97D1-F08396B3CA46}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BDAEBB96-88F6-4217-97D1-F08396B3CA46}.Release|x86.ActiveCfg = Release|Any CPU
 		{BDAEBB96-88F6-4217-97D1-F08396B3CA46}.Release|x86.Build.0 = Release|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Debug|x86.Build.0 = Debug|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Release|x86.ActiveCfg = Release|Any CPU
+		{CA604AF3-D043-43FD-BF7F-5DADB56FE0DC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

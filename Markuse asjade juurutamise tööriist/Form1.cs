@@ -10,6 +10,9 @@ using System.Management;
 using System.Security.Cryptography;
 using System.IO;
 using Microsoft.Win32;
+using System.Net;
+using System.Globalization;
+using System.Diagnostics;
 
 namespace Markuse_asjade_juurutamise_tööriist
 {
@@ -20,6 +23,9 @@ namespace Markuse_asjade_juurutamise_tööriist
         int rootimg = 1;
         string action = "collect";
         string flashID = ":";
+        string cdrive = Environment.GetEnvironmentVariable("HOMEDRIVE");
+        string[] E_INFO;
+        protected string mep = "https://markusmaal.ee/mas_db/api.php";
         bool canClose = false;
         public Form1()
         {
@@ -222,44 +228,217 @@ namespace Markuse_asjade_juurutamise_tööriist
                 Setup setup = new Setup();
                 if (setup.ShowDialog() == DialogResult.OK)
                 {
+                    label4.Visible = true;
+                    this.label1.Text = setup.stuffLabel.Text;
+                    if (!Directory.Exists(cdrive + @"\mas"))
+                    {
+                        Directory.CreateDirectory(cdrive + @"\mas");
+                    }
+                    string latest_edition = "";
+                    string edition = setup.basicPlusRadioButton.Checked ? "Basic+" : "Pro";
+                    using (WebClient client = new WebClient())
+                    {
+                        latest_edition = client.DownloadString(mep + "?latest_version&edition_info");
+                    }
+                    dynamic latest_version = System.Web.Helpers.Json.Decode(latest_edition);
+                    CultureInfo ci = CultureInfo.InstalledUICulture;
+                    E_INFO = new string[12] {
+                        "[Edition_info]",
+                        edition,
+                        latest_version.VERSION,
+                        latest_version.BUILD + (setup.vpc ? "b" : "a"),
+                        "Yes",
+                        Environment.UserName,
+                        ci.Name,
+                        Environment.OSVersion.Version.Major + "." + Environment.OSVersion.Version.Minor,
+                        ((edition == "Pro") ? "IP-" : "") + (setup.TSCheck.Checked ? "IT-" : "") + (setup.WXCheck.Checked ? "WX-" : "") + (setup.RMCheck.Checked ? "RM-" : "") +
+                        (setup.CSCheck.Checked ? "CS-" : "") + (setup.RDCheck.Checked ? "RD-" : "") + (setup.LTCheck.Checked ? "LT-" : "") + (setup.LTCheck.Checked ? "GP-" : "") +
+                        "TS-MM",
+                        latest_version.PIN,
+                        latest_version.NAME,
+                        "",
+                    };
+                    rootImageTimer.Enabled = true;
+                    label3.Visible = true;
+                    pictureBox2.Visible = true;
+                    label3.Text = "Palun oota...";
                     this.Show();
-                } else
+                    action = "root";
+                    actionWaitTimer.Enabled = true;
+                }
+                else
                 {
                     canClose = true;
                     this.Close();
                 }
             }
+            else if (action == "root")
+            {
+                actionWaitTimer.Enabled = false;
+                File.WriteAllText(cdrive + @"\mas\edition.txt", string.Join("\n", E_INFO));
+                File.WriteAllText(cdrive + @"\mas\edition_1.txt", string.Join(";", E_INFO));
+                File.WriteAllText(cdrive + @"\mas\mas.cnf", "true;false;false;");
+                actionWaitTimer.Enabled = true;
+                action = "root2";
+            }
+            else if (action == "root2")
+            {
+                actionWaitTimer.Enabled = false;
+                WriteFile();
+                actionWaitTimer.Enabled = true;
+                action = "dloadapps";
+            } else if (action == "dloadapps")
+            {
+                actionWaitTimer.Enabled = false;
+                Directory.CreateDirectory(cdrive + @"\mas\Markuse asjad");
+
+                using (WebClient client = new WebClient())
+                {
+                    client.DownloadFile(mep + "?dload=JTR.exe", cdrive + @"\mas\Markuse asjad\JTR.exe");
+                    client.DownloadFile(mep + "?dload=FlashUnlock.exe", cdrive + @"\mas\Markuse asjad\FlashUnlock.exe");
+                    File.Copy(cdrive + @"\mas\Markuse asjad\FlashUnlock.exe", cdrive + @"\mas\FlashUnlock.exe");
+                    client.DownloadFile(mep + "?dload=Markuse arvuti juhtpaneel.exe", cdrive + @"\mas\Markuse asjad\Markuse arvuti juhtpaneel.exe");
+                }
+                action = "organize_data";
+                actionWaitTimer.Enabled = true;
+            }
+            else if (action == "organize_data")
+            {
+                actionWaitTimer.Enabled = false;
+                File.Copy(cdrive + @"\mas\Markuse asjad\Markuse arvuti juhtpaneel.exe", cdrive + @"\mas\Markuse asjad\cpanel.exe");
+                using (WebClient client = new WebClient())
+                {
+                    if (E_INFO[1] == "Pro")
+                    {
+                        client.DownloadFile(mep + "?dload=TöölauaMärkmed.exe", cdrive + @"\mas\Markuse asjad\TöölauaMärkmed.exe");
+                        Directory.CreateDirectory(cdrive + @"\mas\notes");
+                        File.WriteAllText(cdrive + @"\mas\notes\note_1_y.txt", "");
+                        File.WriteAllText(cdrive + @"\mas\notes\.setting_note_1.meta", "0;0;195;163;");
+                        File.WriteAllBytes(cdrive + @"\mas\MarkuStation.exe", Properties.Resources.MarkuStation);
+                        File.WriteAllText(cdrive + @"\mas\ms_display.txt", "extend\r\n");
+                        File.WriteAllText(cdrive + @"\mas\ms_exec.txt", "* MarkuStation käivitaja loetelu (ärge eemaldage/lisage semikooloneid)*;\n\n");
+                        File.WriteAllText(cdrive + @"\mas\ms_games.txt", "* MarkuStation mängude loetelu *\n\n");
+                        File.WriteAllText(cdrive + @"\mas\itstart.bat", Properties.Resources.itstart);
+                        File.WriteAllText(cdrive + @"\mas\game_optimize.bat", Properties.Resources.game_optimize);
+                        File.WriteAllText(cdrive + @"\mas\game_preoptimize.bat", Properties.Resources.game_preoptimize);
+                        File.WriteAllText(cdrive + @"\mas\game_restore.bat", Properties.Resources.game_restore);
+                        File.WriteAllText(cdrive + @"\mas\finalize_install.bat", Properties.Resources.finalize_install);
+                    }
+                }
+                File.WriteAllText(cdrive + @"\mas\servicestart.bat", Properties.Resources.servicestart);
+                File.WriteAllText(cdrive + @"\mas\startup_optimize.bat", Properties.Resources.startup_optimize);
+                File.WriteAllText(cdrive + @"\mas\setting.txt", "true\ntrue\ntrue");
+                File.WriteAllText(cdrive + @"\mas\remas.bat", Properties.Resources.remas);
+                File.WriteAllText(cdrive + @"\mas\redoexp.cmd", Properties.Resources.redoexp);
+                File.WriteAllText(cdrive + @"\mas\settings2.sf", "AutoRun=false");
+                File.WriteAllText(cdrive + @"\mas\settings.sf", "NightMode=No;");
+
+                action = "dloadapps2";
+                actionWaitTimer.Enabled = true;
+            } else if (action == "dloadapps2")
+            {
+                actionWaitTimer.Enabled = false;
+                using (WebClient client = new WebClient())
+                {
+                    if (E_INFO[1] == "Pro")
+                    {
+                        client.DownloadFile(mep + "?dload=Markuse arvuti integratsioonitarkvara.exe", cdrive + @"\mas\Markuse asjad\Markuse arvuti integratsioonitarkvara.exe");
+
+                        if (E_INFO[8].Contains("TS"))
+                        {
+                            client.DownloadFile(mep + "?dload=Interaktiivne töölaud.exe", cdrive + @"\mas\Markuse asjad\Interaktiivne töölaud.exe");
+                            File.WriteAllBytes(cdrive + @"\mas\Uue aasta vastuvõtja.exe", Properties.Resources.Uue_aasta_vastuvõtja);
+                            Directory.CreateDirectory(cdrive + @"\mas\backgrounds");
+                            Directory.CreateDirectory(cdrive + @"\mas\songs");
+                        }
+                        if (E_INFO[8].Contains("RM"))
+                        {
+                            File.WriteAllBytes(cdrive + @"\mas\Markuse asjad töölaud_2.0.rmskin", Properties.Resources.Markuse_asjad_töölaud_2_0);
+                        }
+                    }
+                }
+                action = "finalize";
+                actionWaitTimer.Enabled = true;
+            } else if (action == "finalize")
+            {
+                Bitmap bg_common = Properties.Resources.bg_common;
+                Bitmap bg_desktop = Properties.Resources.bg_desktop;
+                Bitmap bg_login = Properties.Resources.bg_login ;
+                Bitmap bg_uncommon = Properties.Resources.bg_uncommon;
+                File.WriteAllBytes(cdrive + @"\mas\update_bg.ps1", Properties.Resources.update_bg);
+                File.WriteAllText(cdrive + @"\mas\organize_desktop.bat", Properties.Resources.organize_desktop);
+                File.WriteAllText(cdrive + @"\mas\info.bat", Properties.Resources.info);
+                bg_common.Save(cdrive + @"\mas\bg_common.png");
+                bg_desktop.Save(cdrive + @"\mas\bg_desktop.png");
+                bg_login.Save(cdrive + @"\mas\bg_login.png");
+                bg_uncommon.Save(cdrive + @"\mas\bg_uncommon.png");
+                Directory.CreateDirectory(cdrive + @"\mas\desktop_default");
+                Directory.CreateDirectory(cdrive + @"\mas\desktop_default\icons1");
+                Directory.CreateDirectory(cdrive + @"\mas\desktop_default\icons2");
+                Directory.CreateDirectory(cdrive + @"\mas\Markuse kaustad avaleht");
+                File.WriteAllBytes(cdrive + @"\mas\ChangeWallpaper.exe", Properties.Resources.ChangeWallpaper);
+                File.WriteAllText(cdrive + @"\mas\accentcolor.txt", "White");
+                Process p = new Process();
+                p.StartInfo.FileName = "cmd";
+                p.StartInfo.Arguments = "/k move \"%userprofile%\\Desktop\\*\" \"%HOMEDRIVE%\\mas\\desktop_default\\icons2\" & rd /s /q \"%userprofile%\\Desktop\" & mklink /j \"%USERPROFILE%\\Desktop\" \"%HOMEDRIVE%\\mas\\desktop_default\\icons1\"";
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                p.Start();
+                action = "rootend";
+            }
+            else if (action == "rootend")
+            {
+                label5.Text = "Valmis";
+                actionWaitTimer.Enabled = false;
+                pictureBox2.Visible = false;
+                label3.Visible = false;
+                rootImageTimer.Enabled = false;
+                MessageBox.Show("Arvuti juuurutati edukalt!", "Markuse asjade juurutamise tööriist", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                canClose = true;
+                this.Close();
+            }
             else if (action == "flash_w")
             {
                 if (!Directory.Exists(flashID + "\\E_INFO\\ROOT_INF"))
                 {
-                    Directory.CreateDirectory(flashID + "\\E_INFO\\ROOT_INF");
-                } else
-                {
-                    actionWaitTimer.Enabled = false;
-                    if (File.Exists(flashID + "\\E_INBFO\\ROOT_INF\\verify.dat"))
+                    if (flashID == ":")
                     {
-                        if (MessageBox.Show("Sõrmejälg on juba eelnevalt loodud. Kas soovite selle üle kirjutada?", "Markuse asjade juurutamise tööriist", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
-                        {
-                            Directory.Delete(flashID + "\\E_INFO\\ROOT_INF", true);
-                            Directory.CreateDirectory(flashID + "\\E_INFO\\ROOT_INF");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Juurutamise tööriist sulgub, kuna tegum nurjus. P: Sõrmejälge ei saa luua", "Markuse asjade juurutamise tööriist peab sulguma", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            canClose = true;
-                            this.Close();
-                        }
+                        actionWaitTimer.Enabled = false;
+                        MessageBox.Show("Ühtegi Markuse mälupulka ei leitud. Programm sulgub nüüd.", "Markuse asjade juurutamise tööriist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        canClose = true;
+                        this.Close();
+                        return;
                     }
-                    string pass_phrase = File.ReadAllText(flashID + "\\E_INFO\\edition.cmd", Encoding.ASCII).ToLower();
-                    string unique_code = StringCipher.Encrypt(GetSerialFromDrive(flashID), pass_phrase);
-                    File.WriteAllText(flashID + "\\E_INFO\\ROOT_INF\\verify.dat", unique_code, Encoding.BigEndianUnicode);
-                    MessageBox.Show("Sõrmejälg loodi edukalt " + flashID + " kettale.", "Markuse asjade juurutamise tööriist", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    canClose = true;
-                    this.Close();
-                    // action = "end";
-                    // actionWaitTimer.Enabled = true;
+                    else
+                    {
+                        Directory.CreateDirectory(flashID + "\\E_INFO\\ROOT_INF");
+                    }
                 }
+                actionWaitTimer.Enabled = false;
+                if (File.Exists(flashID + "\\E_INBFO\\ROOT_INF\\verify.dat"))
+                {
+                    if (MessageBox.Show("Sõrmejälg on juba eelnevalt loodud. Kas soovite selle üle kirjutada?", "Markuse asjade juurutamise tööriist", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                    {
+                        Directory.Delete(flashID + "\\E_INFO\\ROOT_INF", true);
+                        Directory.CreateDirectory(flashID + "\\E_INFO\\ROOT_INF");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Juurutamise tööriist sulgub, kuna tegum nurjus. P: Sõrmejälge ei saa luua", "Markuse asjade juurutamise tööriist peab sulguma", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        canClose = true;
+                        this.Close();
+                        return;
+                    }
+                }
+                string pass_phrase = File.ReadAllText(flashID + "\\E_INFO\\edition.cmd", Encoding.ASCII).ToLower();
+                string unique_code = StringCipher.Encrypt(GetSerialFromDrive(flashID), pass_phrase);
+                File.WriteAllText(flashID + "\\E_INFO\\ROOT_INF\\verify.dat", unique_code, Encoding.BigEndianUnicode);
+                MessageBox.Show("Sõrmejälg loodi edukalt " + flashID + " kettale.", "Markuse asjade juurutamise tööriist", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                canClose = true;
+                this.Close();
+                // action = "end";
+                // actionWaitTimer.Enabled = true;
+                
             }
         }
 

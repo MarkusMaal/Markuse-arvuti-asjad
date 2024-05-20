@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>Markuse_arvuti_lukustamissüsteem</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="cpu1.png" />
+    <None Remove="hdd.png" />
+    <None Remove="lock.png" />
+    <None Remove="mas_general.png" />
+    <None Remove="ram.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="cpu1.png" />
+    <Resource Include="hdd.png" />
+    <Resource Include="lock.png" />
+    <Resource Include="mas_general.png" />
+    <Resource Include="ram.png" />
+  </ItemGroup>
+
+</Project>

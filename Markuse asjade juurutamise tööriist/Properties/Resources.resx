@@ -175,4 +175,64 @@
   <data name="mas_general" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mas_general.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bg_common" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bg_common.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg_desktop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bg_desktop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg_login" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bg_login.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bg_uncommon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bg_uncommon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="update_bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\update_bg.ps1;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Uue_aasta_vastuvõtja" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Uue aasta vastuvõtja.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ChangeWallpaper" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ChangeWallpaper.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="finalize_install" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\finalize_install.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1257</value>
+  </data>
+  <data name="game_optimize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\game_optimize.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1257</value>
+  </data>
+  <data name="game_preoptimize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\game_preoptimize.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1257</value>
+  </data>
+  <data name="game_restore" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\game_restore.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1257</value>
+  </data>
+  <data name="info" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\info.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1257</value>
+  </data>
+  <data name="itstart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\itstart.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1257</value>
+  </data>
+  <data name="Markuse_asjad_töölaud_2_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Markuse asjad töölaud_2.0.rmskin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkuStation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MarkuStation.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="organize_desktop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\organize_desktop.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1257</value>
+  </data>
+  <data name="redoexp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\redoexp.cmd;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1257</value>
+  </data>
+  <data name="remas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\remas.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1257</value>
+  </data>
+  <data name="servicestart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\servicestart.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1257</value>
+  </data>
+  <data name="startup_optimize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\startup_optimize.bat;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1257</value>
+  </data>
 </root>

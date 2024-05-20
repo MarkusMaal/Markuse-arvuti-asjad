@@ -63,6 +63,206 @@ namespace Markuse_asjade_juurutamise_tööriist.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_common {
+            get {
+                object obj = ResourceManager.GetObject("bg_common", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bg_desktop {
+            get {
+                object obj = ResourceManager.GetObject("bg_desktop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bg_login {
+            get {
+                object obj = ResourceManager.GetObject("bg_login", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bg_uncommon {
+            get {
+                object obj = ResourceManager.GetObject("bg_uncommon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ChangeWallpaper {
+            get {
+                object obj = ResourceManager.GetObject("ChangeWallpaper", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @echo off
+        ///::
+        ///:: EnableDelayedExpansion, because we need to access
+        ///:: variables within command groups inside if statements
+        ///:: and for loops
+        ///::
+        ///:: EnableExtensions allows us to access all available
+        ///:: commands
+        ///::
+        ///setlocal EnableExtensions EnableDelayedExpansion
+        ///cd /d &quot;%userprofile%\Desktop&quot;
+        ///:: defaults - these are shortcuts, that are whitelisted, because they control
+        ///:: the visibility of desktop icons
+        ///set &quot;defaults=Ajutised_failid Dokumendid_ja_muud_failid Minimaalne_t””laud M„lupulga_Mine_kaust  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string finalize_install {
+            get {
+                return ResourceManager.GetString("finalize_install", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to set /p workdir=&lt;C:\mas\wd.txt
+        ///del C:\mas\wd.txt
+        ///cd &quot;%workdir%&quot;
+        ///start &quot;&quot; &quot;%*&quot;
+        ///::@echo.&gt;C:\mas\theend.txt
+        ///.
+        /// </summary>
+        internal static string game_optimize {
+            get {
+                return ResourceManager.GetString("game_optimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @echo off
+        ///	setlocal EnableDelayedExpansion EnableExtensions
+        ///		:: try to terminate, then kill the following processes:
+        ///		set &quot;hitlist=ApCent Markuse_arvuti_integratsioonitarkvara Rainmeter explorer StartMenu RtHDVCPL vsnstd3 pwsafe python python3.10 pythonw3.10 Taskmgr httpd mysqld wampmanager TabTip chrome UplayWebCore upc Steam msedgewebview2 EasyTuneEngineService vmware-authd vmware-authd vmware-usbarbitrator64&quot;
+        ///		for %%a in (%hitlist%) do (
+        ///			call :terminatethenkill %%a
+        ///		)
+        ///		pause
+        ///		:: disable  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string game_preoptimize {
+            get {
+                return ResourceManager.GetString("game_preoptimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if not exist C:\mas\irunning.log (
+        ///	for /l %%a in (1 1 10) do taskkill /IM explorer.exe 2&gt;nul
+        ///	taskkill /F /IM explorer.exe 2&gt;nul
+        ///	start %systemroot%\explorer.exe
+        ///	for /l %%a in (1 1 10) do taskkill /IM explorer.exe 2&gt;nul
+        ///	taskkill /F /IM explorer.exe 2&gt;nul
+        ///	start %systemroot%\explorer.exe
+        ///	for /l %%a in (1 1 10) do taskkill /IM explorer.exe 2&gt;nul
+        ///	taskkill /F /IM explorer.exe 2&gt;nul
+        ///	start &quot;&quot; &quot;%systemroot%\explorer.exe&quot;
+        ///	start &quot;&quot; &quot;C:\Program Files\Rainmeter\Rainmeter.exe&quot;
+        ///)
+        ///if not exist &quot;%userpr [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string game_restore {
+            get {
+                return ResourceManager.GetString("game_restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @echo off
+        ///::å Õ
+        ///::ˇ Ä
+        ///::™ Ö
+        ///:: Ü
+        ///::õ ä
+        ///::ä „
+        ///::ö ”
+        ///::ü 
+        ///setlocal EnableDelayedExpansion
+        ///set &quot;tab=	&quot;
+        ///for /l %%a in (1,1,1000) do set &quot;bck=!bck!&quot;
+        ///
+        ///:menu
+        ///cls
+        ///Echo.
+        ///Echo SSTEEMI INFO
+        ///Echo.
+        ///Echo Mida soovite teada saada?
+        ///Echo.
+        ///Echo 1. Paigalduse informatsioon
+        ///Echo 2. Versiooni informatsioon
+        ///Echo 3. Lahku
+        ///Echo.
+        ///set /p osfer=Sisesta number:
+        ///if &quot;%osfer%&quot;==&quot;1&quot; goto installinfo
+        ///if &quot;%osfer%&quot;==&quot;2&quot; goto versioninfo
+        ///if &quot;%osfer%&quot;==&quot;3&quot; exit
+        ///goto menu
+        ///
+        ///
+        ///:versioninfo
+        ///SET IDX=1
+        ///for /f &quot;del [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string info {
+            get {
+                return ResourceManager.GetString("info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @echo off
+        ///taskkill /F /IM explorer.exe
+        ///taskkill /F /IM Rainmeter.exe
+        ///start &quot;&quot; &quot;C:\mas\Markuse asjad\Interaktiivne t””laud.exe&quot;
+        ///@echo.&gt;&gt;C:\mas\irunning.log
+        ///.
+        /// </summary>
+        internal static string itstart {
+            get {
+                return ResourceManager.GetString("itstart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Markuse_asjad_töölaud_2_0 {
+            get {
+                object obj = ResourceManager.GetObject("Markuse_asjad_töölaud_2_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] MarkuStation {
+            get {
+                object obj = ResourceManager.GetObject("MarkuStation", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap mas_general {
             get {
                 object obj = ResourceManager.GetObject("mas_general", resourceCulture);
@@ -77,6 +277,73 @@ namespace Markuse_asjade_juurutamise_tööriist.Properties {
             get {
                 object obj = ResourceManager.GetObject("mas_mini", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @echo off
+        ///setlocal EnableDelayedExpansion
+        ///if exist &quot;%userprofile%\Desktop\Audacity.lnk&quot; (
+        ///rd &quot;%userprofile%\Desktop&quot;
+        ///mklink /j &quot;%userprofile%\Desktop&quot; &quot;C:\mas\desktop_default\icons1&quot;
+        ///ping localhost -n 2 &gt;nul
+        ///start &quot;&quot; &quot;C:\Program Files\Rainmeter\Rainmeter.exe&quot;
+        ///) else (
+        ///rd &quot;%userprofile%\Desktop&quot;
+        ///mklink /j &quot;%userprofile%\Desktop&quot; &quot;C:\mas\desktop_default\icons2&quot;
+        ///ping localhost -n 2 &gt;nul
+        ///set /a loopcount=0
+        ///:a
+        ///tasklist /fi &quot;ImageName eq Rainmeter.exe&quot; /fo csv 2&gt;NUL | find /I &quot;Rainmeter.exe&quot;&gt;NUL
+        ///if  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string organize_desktop {
+            get {
+                return ResourceManager.GetString("organize_desktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for /l %%a in (1 1 10) do taskkill /F /IM explorer.exe
+        ///start %systemroot%\explorer.exe
+        ///for /l %%a in (1 1 10) do taskkill /F /IM explorer.exe
+        ///start %systemroot%\explorer.exe
+        ///for /l %%a in (1 1 10) do taskkill /F /IM explorer.exe
+        ///start &quot;&quot; &quot;%systemroot%\explorer.exe&quot;
+        ///if exist &quot;%userprofile%\Desktop\paint.NET.lnk&quot; (
+        ///start /min %homedrive%\mas\organize_desktop.bat
+        ///)
+        ///for /l %%a in (1 1 10) do taskkill /F /IM &quot;Interaktiivne t””laud.exe&quot;
+        ///if not &quot;%userprofile:~0,13%&quot;==&quot;%homedrive%\Users\TEMP&quot; (
+        ///start &quot;&quot;  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string redoexp {
+            get {
+                return ResourceManager.GetString("redoexp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @echo off
+        ///taskkill /IM explorer.exe
+        ///taskkill /IM &quot;Markuse arvuti integratsioonitarkvara.exe&quot;
+        ///taskkill /IM Rainmeter.exe
+        ///taskkill /IM StartMenu.exe
+        ///taskkill /IM vsnstd3.exe
+        ///taskkill /IM python.exe
+        ///:: wait 5 seconds before forcefully killing processes...
+        ///ping localhost -n 5 &gt;nul
+        ///taskkill /F /IM explorer.exe
+        ///taskkill /F /IM &quot;Markuse arvuti integratsioonitarkvara.exe&quot;
+        ///taskkill /F /IM Rainmeter.exe
+        ///taskkill /F /IM StartMenu.exe
+        ///taskkill /F /IM vsnstd3.exe
+        ///taskkill /F /IM python.exe
+        ///if exist &quot;%user [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string remas {
+            get {
+                return ResourceManager.GetString("remas", resourceCulture);
             }
         }
         
@@ -245,6 +512,62 @@ namespace Markuse_asjade_juurutamise_tööriist.Properties {
             get {
                 object obj = ResourceManager.GetObject("root_root_9", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @echo off
+        ///del C:\mas\*.log
+        ///@echo. &gt; C:\mas\service.log.
+        /// </summary>
+        internal static string servicestart {
+            get {
+                return ResourceManager.GetString("servicestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @echo off
+        ///:: for backwards compatibility, does nothing useful
+        ///@echo. &gt; C:\mas\start1.log
+        ///ping localhost -n 5 &gt; nul
+        ///@echo. &gt; C:\mas\start2.log
+        ///ping localhost -n 11 &gt; nul
+        ///@echo. &gt; C:\mas\start3.log
+        ///ping localhost -n 11 &gt; nul
+        ///@echo. &gt; C:\mas\start4.log
+        ///ping localhost -n 25 &gt; nul
+        ///@echo. &gt; C:\mas\start5.log
+        ///ping localhost -n 7 &gt; nul
+        ///@echo. &gt; C:\mas\start6.log
+        ///ping localhost -n 6 &gt; nul
+        ///@echo. &gt; C:\mas\start7.log
+        ///ping localhost -n 4 &gt; nul
+        ///@echo. &gt; C:\mas\finish.log.
+        /// </summary>
+        internal static string startup_optimize {
+            get {
+                return ResourceManager.GetString("startup_optimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] update_bg {
+            get {
+                object obj = ResourceManager.GetObject("update_bg", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Uue_aasta_vastuvõtja {
+            get {
+                object obj = ResourceManager.GetObject("Uue_aasta_vastuvõtja", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }
