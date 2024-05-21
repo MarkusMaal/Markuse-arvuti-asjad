@@ -22,6 +22,8 @@ for /f "delims=" %%a in ('dir /b') do (
 		if "!exclude:%%a=!"=="!exclude!" (
 			echo Copying !realdir!...
 			copy "!realdir!\bin\Release\net8.0-windows\!realdir!.exe" "%homedrive%\mas\Markuse asjad\!realdir!.exe" /y >nul
+			copy "!realdir!\bin\Release\net8.0-windows\!realdir!.exe" "%homedrive%\mas\Markuse asjad\!realdir!.dll" /y >nul
+			copy "!realdir!\bin\Release\net8.0-windows\!realdir!.exe" "%homedrive%\mas\Markuse asjad\!realdir!.runtimeconfig.json" /y >nul
 		) else (
 			echo Skipped !realdir!
 		)

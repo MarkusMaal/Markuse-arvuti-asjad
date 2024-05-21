@@ -84,20 +84,30 @@ namespace Markuse_arvuti_lukustamissüsteem
             throw new NotImplementedException();
         }
 
+        private void ClockTick()
+        {
+            if (TestModeLabel.Content.ToString().Contains(":"))
+            {
+                TestModeLabel.Content = DateTime.Now.Hour.ToString().PadLeft(2, '0') + " " + DateTime.Now.Minute.ToString().PadLeft(2, '0');
+            }
+            else
+            {
+                TestModeLabel.Content = DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":" + DateTime.Now.Minute.ToString().PadLeft(2, '0');
+            }
+            TestModeLabel.Content = TestModeLabel.Content + string.Format(" | {0}. {1} {2}. a", DateTime.Now.Day, CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month), DateTime.Now.Year);
+
+        }
+
         private void CheckLoop_Tick(object sender, EventArgs e)
         {
+            ClockTick();
+
             if (cpuCounter == null)
             {
                 cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
                 hddCounter = new PerformanceCounter("PhysicalDisk", "% Disk Time", "_Total");
             }
-            if (TestModeLabel.Content.ToString().Contains(":"))
-            {
-                TestModeLabel.Content = DateTime.Now.Hour.ToString().PadLeft(2, '0') + " " + DateTime.Now.Minute.ToString().PadLeft(2, '0');
-            } else
-            {
-                TestModeLabel.Content = DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":" + DateTime.Now.Minute.ToString().PadLeft(2, '0');
-            }
+
             int percCpu = Convert.ToInt32(cpuCounter.NextValue());
 
             long phav = PerformanceInfo.GetPhysicalAvailableMemoryInMiB();
@@ -179,7 +189,7 @@ namespace Markuse_arvuti_lukustamissüsteem
                     this.ForceQuit();
                 }
             }
-            unlockPath = masRoot + "\\" + DateTime.Now.Hour.ToString() + "." + (DateTime.Now.Minute-1).ToString() + ".unlock";
+            unlockPath = masRoot + "\\" + DateTime.Now.Hour.ToString() + "." + (DateTime.Now.Minute - 1).ToString() + ".unlock";
             if (File.Exists(unlockPath))
             {
                 DateTime creationTime = File.GetCreationTime(unlockPath);
@@ -191,7 +201,6 @@ namespace Markuse_arvuti_lukustamissüsteem
                     this.ForceQuit();
                 }
             }
-
         }
 
         private bool LoadTheme()
@@ -212,9 +221,9 @@ namespace Markuse_arvuti_lukustamissüsteem
             string[] colors2 = File.ReadAllText(masRoot + "scheme.cfg").Split(";")[1].Split(":");
             this.scheme = Color.FromArgb(255, byte.Parse(colors[0]), byte.Parse(colors[1]), byte.Parse(colors[2]));
             this.textScheme = Color.FromArgb(255, byte.Parse(colors2[0]), byte.Parse(colors2[1]), byte.Parse(colors2[2]));
-            this.MainWindowContainer.Background = new SolidColorBrush(this.scheme);
-            this.Background = new ImageBrush(new BitmapImage(new Uri(masRoot + "bg_common.png")));
+            this.Background = new SolidColorBrush(this.scheme);
             this.Foreground = new SolidColorBrush(this.textScheme);
+            this.MainWindow1.Background = new ImageBrush(new BitmapImage(new Uri(masRoot + "bg_common.png")));
             this.BottomLabel.Foreground = new SolidColorBrush(this.textScheme);
             this.TestModeLabel.Foreground = new SolidColorBrush(this.textScheme);
             this.CenterText.Foreground = new SolidColorBrush(this.textScheme);
@@ -344,6 +353,7 @@ namespace Markuse_arvuti_lukustamissüsteem
                     sb.Append(b.ToString("X2"));
                 passHash = sb.ToString().ToLower();
             }
+            ClockTick();
         }
 
         public static byte[] StringToByteArray(string hex)
@@ -403,7 +413,7 @@ namespace Markuse_arvuti_lukustamissüsteem
                         }
                         break;
                     case Key.F2:
-                        string[] fileChecks = { "edition.txt", "renable.bat", "prepare.bat", "pwd.dat", "restore_explorer.bat", "verifile2.dat", "verifile2.jar", "scheme.cfg", "bg_common.png" };
+                        string[] fileChecks = { "edition.txt", "renable.bat", "prepare.bat", "pwd.dat", "verifile2.dat", "verifile2.jar", "scheme.cfg", "bg_common.png" };
                         StringBuilder sb = new StringBuilder();
                         foreach(string filecheck in fileChecks)
                         {
@@ -510,8 +520,7 @@ namespace Markuse_arvuti_lukustamissüsteem
                 psi.FileName = masRoot + "renable.bat";
                 psi.CreateNoWindow = true;
                 psi.WindowStyle = ProcessWindowStyle.Hidden;
-                psi.UseShellExecute = true;
-                psi.Verb = "runas";
+                psi.UseShellExecute = false;
 
                 var process = new Process();
                 process.StartInfo = psi;
