@@ -7,6 +7,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>mas.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,11 @@
     <None Remove="lock.png" />
     <None Remove="mas_general.png" />
     <None Remove="ram.png" />
+    <None Remove="root_idc_key.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="mas.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +29,7 @@
     <Resource Include="lock.png" />
     <Resource Include="mas_general.png" />
     <Resource Include="ram.png" />
+    <Resource Include="root_idc_key.png" />
   </ItemGroup>
 
 </Project>

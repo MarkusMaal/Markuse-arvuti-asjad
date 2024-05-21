@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Security.Permissions;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -22,9 +23,7 @@ namespace Markuse_arvuti_lukustamissüsteem
         readonly bool userEnvironment = false;
         readonly string[] whitelistedHashes = { "B881FBAB5E73D3984F2914FAEA743334D1B94DFFE98E8E1C4C8C412088D2C9C2" };
         readonly bool dev = false;
-        #pragma warning disable IDE0044
         string masRoot = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\";
-        #pragma warning restore IDE0044
         Color scheme = Color.FromArgb(255, 255, 255, 255);
         Color textScheme = Color.FromArgb(255, 0, 0, 0);
         PerformanceCounter? cpuCounter = null;
@@ -74,6 +73,10 @@ namespace Markuse_arvuti_lukustamissüsteem
             checkLoop.Interval = new TimeSpan(0, 0, 1);
             checkLoop.Start();
             Microsoft.Win32.SystemEvents.SessionEnding += new Microsoft.Win32.SessionEndingEventHandler(SystemEvents_SessionEnding);
+            if (!dev)
+            {
+                LockWorkstation();
+            }
         }
 
         private void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
@@ -269,50 +272,70 @@ namespace Markuse_arvuti_lukustamissüsteem
             return "FAILED";
         }
 
-        private void ForceQuit()
+        private void ForceQuit(bool skipUnlock = false)
         {
+            if (!dev && !skipUnlock) {
+                if (!UnlockWorkstation())
+                {
+                    return;
+                }
+            }
             this.canClose = true;
             this.Close();
         }
 
+        private void CreatePassword()
+        {
+            SetPassword sp = new SetPassword();
+            sp.TextBoxLabel.Content = "Parooli pole veel seadistatud, määrake uus parool";
+            string pass1;
+            if (sp.ShowDialog() ?? false)
+            {
+                pass1 = GetHashString(sp.PasswordValue.Password);
+            }
+            else
+            {
+                this.ForceQuit();
+                return;
+            }
+            sp.Close();
+            sp = new SetPassword();
+            sp.TextBoxLabel.Content = "Sisestage parool uuesti";
+            sp.PasswordValue.Password = "";
+            string pass2;
+            if (sp.ShowDialog() ?? false)
+            {
+                pass2 = GetHashString(sp.PasswordValue.Password);
+            }
+            else
+            {
+                this.ForceQuit();
+                return;
+            }
+            if (pass1 != pass2)
+            {
+                MessageBox.Show("Paroolid ei ühti!", "Parooli seadistamine", MessageBoxButton.OK, MessageBoxImage.Error);
+                ForceQuit();
+                return;
+            }
+            passHash = pass1;
+            if (File.Exists(masRoot + "pwd.dat"))
+            {
+                File.Delete(masRoot + "pwd.dat");
+            }
+            File.WriteAllBytes(masRoot + "pwd.dat", StringToByteArray(passHash));
+        }
+
         private void Window_ContentRendered(object sender, EventArgs e)
         {
+            this.DevMode.Visibility = this.dev ? Visibility.Visible : Visibility.Hidden;
             if (!File.Exists(masRoot + "pwd.dat"))
             {
-                SetPassword sp = new SetPassword();
-                sp.TextBoxLabel.Content = "Parooli pole veel seadistatud, määrake uus parool";
-                string pass1;
-                if (sp.ShowDialog() ?? false)
-                {
-                    pass1 = GetHashString(sp.PasswordValue.Password);
-                }
-                else
-                {
-                    this.ForceQuit();
-                    return;
-                }
-                sp.Close();
-                sp = new SetPassword();
-                sp.TextBoxLabel.Content = "Sisestage parool uuesti";
-                sp.PasswordValue.Password = "";
-                string pass2;
-                if (sp.ShowDialog() ?? false)
-                {
-                    pass2 = GetHashString(sp.PasswordValue.Password);
-                }
-                else
-                {
-                    this.ForceQuit();
-                    return;
-                }
-                if (pass1 != pass2)
-                {
-                    MessageBox.Show("Paroolid ei ühti!", "Parooli seadistamine", MessageBoxButton.OK, MessageBoxImage.Error);
-                    ForceQuit();
-                    return;
-                }
-                passHash = pass1;
-                File.WriteAllBytes(masRoot + "pwd.dat", StringToByteArray(passHash));
+                this.LockImage.Visibility = Visibility.Hidden;
+                this.CenterText.Visibility = Visibility.Hidden;
+                CreatePassword();
+                this.LockImage.Visibility = Visibility.Visible;
+                this.CenterText.Visibility = Visibility.Visible;
             } else
             {
                 byte[] passData = File.ReadAllBytes(masRoot + "pwd.dat");
@@ -365,7 +388,47 @@ namespace Markuse_arvuti_lukustamissüsteem
                         this.Close();
                         break;
                     case Key.F11:
-                        this.TestModeLabel.Content = "Verifile staatus: " + Verifile2();
+                        this.DevMode.Content = "Verifile staatus: " + Verifile2();
+                        break;
+                    case Key.F9:
+                        if (this.WindowState == WindowState.Maximized)
+                        {
+                            this.WindowStyle = WindowStyle.SingleBorderWindow;
+                            this.WindowState = WindowState.Normal;
+                        }
+                        else
+                        {
+                            this.WindowStyle = WindowStyle.None;
+                            this.WindowState = WindowState.Maximized;
+                        }
+                        break;
+                    case Key.F2:
+                        string[] fileChecks = { "edition.txt", "renable.bat", "prepare.bat", "pwd.dat", "restore_explorer.bat", "verifile2.dat", "verifile2.jar", "scheme.cfg", "bg_common.png" };
+                        StringBuilder sb = new StringBuilder();
+                        foreach(string filecheck in fileChecks)
+                        {
+                            sb.Append(filecheck).Append(" - ");
+                            sb.Append(File.Exists(masRoot + filecheck) ? "OK" : "Viga!");
+                            sb.AppendLine();
+                        }
+                        MessageBox.Show(sb.ToString(), "Failikontroll", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                    case Key.F3:
+                        LockWorkstation();
+                        break;
+                    case Key.F4:
+                        UnlockWorkstation();
+                        break;
+                    case Key.F1:
+                        MessageBox.Show(
+                            "Kiirklahvid:\n" +
+                            "F1 - Kiirklahvid\n" +
+                            "F2 - Failikontroll\n" +
+                            "F3 - Katseta lukustamist\n" +
+                            "F4 - Katseta töölaua avamist\n" +
+                            "F9 - Muuda aknarežiimi\n" +
+                            "F11 - Kuva Verifile olek\n" +
+                            "F12 - Sulge aken", "Arendaja režiim", MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
                 }
             }
@@ -388,68 +451,146 @@ namespace Markuse_arvuti_lukustamissüsteem
                 }
                 this.LockImage.Visibility = Visibility.Visible;
                 this.CenterText.Visibility = Visibility.Visible;
+            } else if (e.Key == Key.Escape)
+            {
+                QuickActions qa = new QuickActions();
+                this.LockImage.Visibility = Visibility.Hidden;
+                this.CenterText.Visibility = Visibility.Hidden;
+                qa.ShowDialog();
+                bool correctPass = false;
+                if (qa.action == "chpass")
+                {
+                    SetPassword sp = new SetPassword();
+                    sp.TextBoxLabel.Content = "Sisestage vana parool";
+                    if (sp.ShowDialog() ?? false)
+                    {
+                        correctPass = GetHashString(sp.PasswordValue.Password) == passHash;
+                    }
+                    if (!correctPass)
+                    {
+                        MessageBox.Show("Vale parool!", "Markuse asjad", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        CreatePassword();
+                    }
+                }
+                this.LockImage.Visibility = Visibility.Visible;
+                this.CenterText.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void LockWorkstation()
+        {
+            try
+            {
+                var psi = new ProcessStartInfo();
+                psi.FileName = masRoot + "prepare.bat";
+                psi.CreateNoWindow = true;
+                psi.WindowStyle = ProcessWindowStyle.Hidden;
+                psi.UseShellExecute = true;
+                psi.Verb = "runas";
+
+                var process = new Process();
+                process.StartInfo = psi;
+                process.Start();
+                if (dev) { MessageBox.Show("Töölaud lukustati!", "Markuse arvuti asjad", MessageBoxButton.OK, MessageBoxImage.Information); }
+            } catch (Exception ex)
+            {
+                if (dev) { MessageBox.Show("Töölaua lukustamine nurjus!\nVeakood: " + ex.Message, "Markuse arvuti asjad", MessageBoxButton.OK, MessageBoxImage.Error); }
+                this.ForceQuit(true);
+            }
+        }
+
+        private bool UnlockWorkstation()
+        {
+            try
+            {
+                var psi = new ProcessStartInfo();
+                psi.FileName = masRoot + "renable.bat";
+                psi.CreateNoWindow = true;
+                psi.WindowStyle = ProcessWindowStyle.Hidden;
+                psi.UseShellExecute = true;
+                psi.Verb = "runas";
+
+                var process = new Process();
+                process.StartInfo = psi;
+                process.Start();
+                process.WaitForExit();
+
+                psi = new ProcessStartInfo();
+                psi.FileName = Environment.GetEnvironmentVariable("SYSTEMROOT") + "\\explorer.exe";
+                process = new Process();
+                process.StartInfo = psi;
+                process.Start();
+                if (dev) { MessageBox.Show("Töölaud avati!", "Markuse arvuti asjad", MessageBoxButton.OK, MessageBoxImage.Information); }
+                return true;
+            } catch (Exception ex)
+            {
+                if (dev) { MessageBox.Show("Töölaua avamine nurjus!\nVeakood: " + ex.Message, "Markuse arvuti asjad", MessageBoxButton.OK, MessageBoxImage.Error); }
+                return false;
             }
         }
     }
+}
 
-    // Windows PerformanceInfo API
-    public static class PerformanceInfo
+// Windows PerformanceInfo API
+public static class PerformanceInfo
+{
+    [DllImport("psapi.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool GetPerformanceInfo([Out] out PerformanceInformation PerformanceInformation, [In] int Size);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PerformanceInformation
     {
-        [DllImport("psapi.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetPerformanceInfo([Out] out PerformanceInformation PerformanceInformation, [In] int Size);
+        public int Size;
+        public IntPtr CommitTotal;
+        public IntPtr CommitLimit;
+        public IntPtr CommitPeak;
+        public IntPtr PhysicalTotal;
+        public IntPtr PhysicalAvailable;
+        public IntPtr SystemCache;
+        public IntPtr KernelTotal;
+        public IntPtr KernelPaged;
+        public IntPtr KernelNonPaged;
+        public IntPtr PageSize;
+        public int HandlesCount;
+        public int ProcessCount;
+        public int ThreadCount;
+    }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct PerformanceInformation
+    public static Int64 GetPhysicalAvailableMemoryInMiB()
+    {
+        PerformanceInformation pi = new PerformanceInformation();
+        if (GetPerformanceInfo(out pi, Marshal.SizeOf(pi)))
         {
-            public int Size;
-            public IntPtr CommitTotal;
-            public IntPtr CommitLimit;
-            public IntPtr CommitPeak;
-            public IntPtr PhysicalTotal;
-            public IntPtr PhysicalAvailable;
-            public IntPtr SystemCache;
-            public IntPtr KernelTotal;
-            public IntPtr KernelPaged;
-            public IntPtr KernelNonPaged;
-            public IntPtr PageSize;
-            public int HandlesCount;
-            public int ProcessCount;
-            public int ThreadCount;
+            return Convert.ToInt64((pi.PhysicalAvailable.ToInt64() * pi.PageSize.ToInt64() / 1048576));
+        }
+        else
+        {
+            return -1;
         }
 
-        public static Int64 GetPhysicalAvailableMemoryInMiB()
-        {
-            PerformanceInformation pi = new PerformanceInformation();
-            if (GetPerformanceInfo(out pi, Marshal.SizeOf(pi)))
-            {
-                return Convert.ToInt64((pi.PhysicalAvailable.ToInt64() * pi.PageSize.ToInt64() / 1048576));
-            }
-            else
-            {
-                return -1;
-            }
+    }
 
+    public static Int64 GetTotalMemoryInMiB()
+    {
+        PerformanceInformation pi = new PerformanceInformation();
+        if (GetPerformanceInfo(out pi, Marshal.SizeOf(pi)))
+        {
+            return Convert.ToInt64((pi.PhysicalTotal.ToInt64() * pi.PageSize.ToInt64() / 1048576));
+        }
+        else
+        {
+            return -1;
         }
 
-        public static Int64 GetTotalMemoryInMiB()
-        {
-            PerformanceInformation pi = new PerformanceInformation();
-            if (GetPerformanceInfo(out pi, Marshal.SizeOf(pi)))
-            {
-                return Convert.ToInt64((pi.PhysicalTotal.ToInt64() * pi.PageSize.ToInt64() / 1048576));
-            }
-            else
-            {
-                return -1;
-            }
+    }
 
-        }
-
-        public static void SystemEvents_SessionEnding(object sender, Microsoft.Win32.SessionEndingEventArgs e)
-        {
-            // terminate process if Windows is shutting down or logging off
-            Application.Current.Shutdown();
-        }
+    public static void SystemEvents_SessionEnding(object sender, Microsoft.Win32.SessionEndingEventArgs e)
+    {
+        // terminate process if Windows is shutting down or logging off
+        Application.Current.Shutdown();
     }
 }

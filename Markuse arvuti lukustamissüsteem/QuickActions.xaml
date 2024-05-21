@@ -1,0 +1,18 @@
+﻿<Window x:Class="Markuse_arvuti_lukustamissüsteem.QuickActions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Markuse_arvuti_lukustamissüsteem"
+        mc:Ignorable="d"
+        Title="Tegevused" Height="283" Width="327" Icon="/root_idc_key.png" Topmost="True" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="ShutdownButton" Content="Sule arvuti" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Top" Height="30" Width="150" Click="Button_Click"/>
+            <Button x:Name="RestartButton" Content="Taaskäivita arvuti" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Top" Height="30" Width="150" Click="Button_Click_1"/>
+            <Button x:Name="SwitchButton" Content="Vaheta kasutajat" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Top" Height="30" Width="150" Click="Button_Click_2"/>
+            <Button x:Name="ChPassButton" Content="Muuda parooli" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Height="30" Width="150" Click="Button_Click_3"/> 
+        </StackPanel>
+
+    </Grid>
+</Window>

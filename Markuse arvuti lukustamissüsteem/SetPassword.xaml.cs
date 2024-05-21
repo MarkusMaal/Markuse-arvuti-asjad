@@ -22,9 +22,7 @@ namespace Markuse_arvuti_lukustamissüsteem
     {
         internal Color scheme = Color.FromArgb(255, 255, 255, 255);
         internal Color textScheme = Color.FromArgb(255, 0, 0, 0);
-        #pragma warning disable IDE0044
         string masRoot = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\";
-        #pragma warning restore IDE0044
 
         public SetPassword()
         {
@@ -47,6 +45,10 @@ namespace Markuse_arvuti_lukustamissüsteem
         {
             if (e.Key == Key.Enter) {
                 this.DialogResult = true;
+                this.Close();
+            } else if (e.Key == Key.Escape)
+            {
+                this.DialogResult = false;
                 this.Close();
             }
         }

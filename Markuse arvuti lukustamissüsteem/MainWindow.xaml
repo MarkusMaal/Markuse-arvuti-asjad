@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Markuse_arvuti_lukustamissüsteem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered" Background="White" Closing="MainWindowContainer_Closing" KeyDown="MainWindowContainer_KeyDown">
+        Title="Lukustusekraan" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered" Background="White" Closing="MainWindowContainer_Closing" KeyDown="MainWindowContainer_KeyDown" Icon="/root_idc_key.png">
     <Grid x:Name="MainWindow1">
         <Grid.Background>
             <ImageBrush Stretch="UniformToFill"/>
@@ -33,5 +33,6 @@
             </Border>
         </Viewbox>
         <Image x:Name="LockImage" HorizontalAlignment="Center" Height="126" VerticalAlignment="Center" Width="125" Source="/lock.png" Margin="0,-100,0,0"/>
+        <Label x:Name="DevMode" Content="Testimisrežiim" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Background="Black" Foreground="White" Padding="4,0,4,0" Visibility="Hidden"/>
     </Grid>
 </Window>

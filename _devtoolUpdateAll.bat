@@ -17,6 +17,15 @@ for /f "delims=" %%a in ('dir /b') do (
 			echo Skipped !realdir!
 		)
 	)
+	
+	if exist "!realdir!\bin\Release\net8.0-windows\!realdir!.exe" (
+		if "!exclude:%%a=!"=="!exclude!" (
+			echo Copying !realdir!...
+			copy "!realdir!\bin\Release\net8.0-windows\!realdir!.exe" "%homedrive%\mas\Markuse asjad\!realdir!.exe" /y >nul
+		) else (
+			echo Skipped !realdir!
+		)
+	)
 )
 echo.
 echo Stage 3: Reloading mas backend...
