@@ -162,6 +162,7 @@
   <ItemGroup>
     <Content Include="mas.ico" />
     <Content Include="mas_general.ico" />
+    <None Include="Resources\root_idc_key.png" />
     <None Include="Resources\mas_flash.png" />
     <None Include="Resources\folder.png" />
     <None Include="Resources\mas_optical.png" />

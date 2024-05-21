@@ -261,6 +261,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
             {
                 sünkroniseeriVersioonToolStripMenuItem.Visible = false;
             }
+            lukustaToolStripMenuItem.Visible = File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\Markuse asjad\\Markuse arvuti lukustamissüsteem.exe");
             if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\noteopen.txt"))
             {
                 avaTöölauamärkmedToolStripMenuItem.Text = "Sulge töölauamärkmed";
@@ -722,7 +723,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
             //erisündmused
             try
             {
-                if (specialevents.Length > 0)
+                if ((specialevents != null) && (specialevents.Length > 0))
                 {
                     //käi läbi erisündmuste massiivist
                     foreach (string element in specialevents)
@@ -1547,6 +1548,15 @@ namespace Markuse_arvuti_integratsioonitarkvara
             {
                 MessageBox.Show("DWM värviskeemi laadimine nurjus", "Sünkroniseeri DWM teema", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void lukustaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TaskMenu1.Close();
+            Process p = new Process();
+            p.StartInfo.FileName = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\Markuse asjad\\Markuse arvuti lukustamissüsteem.exe";
+            p.StartInfo.UseShellExecute = false;
+            p.Start();
         }
     }
 }

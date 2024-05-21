@@ -253,6 +253,16 @@ namespace Markuse_arvuti_integratsioonitarkvara.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap root_idc_key {
+            get {
+                object obj = ResourceManager.GetObject("root_idc_key", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap theming {
             get {
                 object obj = ResourceManager.GetObject("theming", resourceCulture);
