@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Management;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace JTR
 {
@@ -14,17 +15,23 @@ namespace JTR
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("\n* Taasjuurutamise tööriist *\n\nProtsessi käigus ÄRGE LÜLITAGE ARVUTIT VÄLJA EGA PEATAGE JTR.EXE PROTSESSI!\nKui juurutamine poole pealt katkestada, ei saa seda arvutit enam selle tööriistaga juurutada!\n");
+            Console.WriteLine("\n* Taasjuurutamise tööriist *\n\nProtsessi käigus ÄRGE LÜLITAGE ARVUTIT VÄLJA EGA PEATAGE JTR.EXE VÕI JAVA.EXE PROTSESSE!\nKui juurutamine poole pealt katkestada, ei saa seda arvutit enam selle tööriistaga juurutada!\n");
             Console.WriteLine("Ettevalmistumine");
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.mas\\verifile2.jar"))
             {
-                Console.WriteLine("    Viga: Arvutis on uuem Verifile versioon, mida see programm ei toeta!");
-                return;
+                Console.WriteLine("    Verifile 2.0 märgistustööriista käivitamine...");
+                Process p = new Process();
+                p.StartInfo.FileName = "java";
+                p.StartInfo.Arguments = "-jar \"" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.mas\\verifile2.jar\" -w";
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                p.Start();
             }
             Console.WriteLine("    Autentimine...");
             if ((Verifile() == false))
             {
                 Console.WriteLine("    Autentimine ebaõnnestus. Palun olge kindel, et programm oleks käivitatud Markuse arvutis.");
+                WriteFile2();
                 return;
             }
             else
@@ -93,6 +100,11 @@ namespace JTR
                 Console.WriteLine("    Süsteemi juurutamise lõpetamine...");
                 WriteFile();
                 Console.WriteLine("Finaliseerimine...");
+
+                if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.mas\\verifile2.jar"))
+                {
+                    WriteFile2();
+                }
                 Console.WriteLine("    Süsteemi olukorra kontrollimine...");
                 if (Verifile() == true)
                 {
@@ -112,6 +124,16 @@ namespace JTR
 
         }
         private static ManagementObjectSearcher aa = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard");
+
+        static void WriteFile2()
+        {
+            Console.WriteLine("    Verifile 2.0 märgistamine...");
+            File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.mas\\vf2.done", "");
+            while (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.mas\\vf2.done"))
+            {
+                Thread.Sleep(1);
+            }
+        }
 
         static void WriteFile()
         {
