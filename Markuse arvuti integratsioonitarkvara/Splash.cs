@@ -24,12 +24,12 @@ namespace Markuse_arvuti_integratsioonitarkvara
         {
             if (this.Visible)
             {
-                if (System.IO.Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\masv"))
+                if (System.IO.Directory.Exists(Program.root + @"v"))
                 {
                     //label1.Text = "markuse virtuaalarvuti asjad";
                     pictureBox1.Image = Properties.Resources.mas_vpc_full;
                 }
-                else if (!System.IO.Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas"))
+                else if (!System.IO.Directory.Exists(Program.root + @""))
                 {
                     //label1.Text = "markuse asjad muudele seadmetele";
                 }

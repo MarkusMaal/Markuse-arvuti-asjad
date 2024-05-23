@@ -22,7 +22,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
             if (this.Visible)
             {
                 Bitmap ei;
-                ei = (Bitmap)Bitmap.FromFile(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\bg_login.png", false);
+                ei = (Bitmap)Bitmap.FromFile(Program.root + @"\bg_login.png", false);
                 this.BackgroundImage = ei;
                 timer1.Enabled = true;
                 pictureBox1.BackColor = this.BackColor;

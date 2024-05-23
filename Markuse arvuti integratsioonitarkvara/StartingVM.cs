@@ -61,7 +61,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 label1.BackColor = this.BackColor;
                 label2.BackColor = this.BackColor;
                 Bitmap ei;
-                ei = (Bitmap)Bitmap.FromFile(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\bg_login.png", false);
+                ei = (Bitmap)Bitmap.FromFile(Program.root + @"\bg_login.png", false);
                 this.BackgroundImage = ei;
             }
         }

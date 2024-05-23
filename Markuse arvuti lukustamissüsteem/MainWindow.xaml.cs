@@ -22,7 +22,7 @@ namespace Markuse_arvuti_lukustamissüsteem
     {
         readonly bool userEnvironment = false;
         readonly string[] whitelistedHashes = { "B881FBAB5E73D3984F2914FAEA743334D1B94DFFE98E8E1C4C8C412088D2C9C2" };
-        readonly bool dev = false;
+        readonly bool dev = true;
         string masRoot = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\";
         Color scheme = Color.FromArgb(255, 255, 255, 255);
         Color textScheme = Color.FromArgb(255, 0, 0, 0);

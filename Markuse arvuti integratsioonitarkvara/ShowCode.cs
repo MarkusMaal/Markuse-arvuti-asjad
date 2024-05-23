@@ -43,10 +43,10 @@ namespace Markuse_arvuti_integratsioonitarkvara
             this.BackColor = bg;
             this.ForeColor = fg;
             string[] log_content;
-            string fileName = @"C:\mas\maia\request_permission.maia";
-            if (File.Exists(@"C:\mas\maia\request_permission.mai"))
+            string fileName = Program.root + @"\maia\request_permission.maia";
+            if (File.Exists(Program.root + @"\maia\request_permission.mai"))
             {
-                fileName = @"C:\mas\maia\request_permission.mai";
+                fileName = Program.root + @"\maia\request_permission.mai";
             }
             log_content = File.ReadAllText(fileName).Split(';');
             devType = log_content[0];
@@ -59,22 +59,22 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 code += chars[r.Next(0, chars.Length)];
             }
             codeLabel.Text = code;
-            File.WriteAllText(string.Format(@"C:\mas\maia\{0}.{1}.maia", devType, devIP.Replace(".", "_")), GetHashString(devType + "__" + code));
+            File.WriteAllText(string.Format(Program.root + @"\maia\{0}.{1}.maia", devType, devIP.Replace(".", "_")), GetHashString(devType + "__" + code));
             File.Delete(fileName);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            File.Delete(string.Format(@"C:\mas\maia\{0}.{1}.maia", devType, devIP.Replace(".", "_")));
+            File.Delete(string.Format(Program.root + @"\maia\{0}.{1}.maia", devType, devIP.Replace(".", "_")));
             this.Close();
         }
 
         private void waitForClose_Tick(object sender, EventArgs e)
         {
-            if (File.Exists(@"C:\mas\maia\close_popup.maia"))
+            if (File.Exists(Program.root + @"\maia\close_popup.maia"))
             {
-                File.Delete(string.Format(@"C:\mas\maia\{0}.{1}.maia", devType, devIP.Replace(".", "_")));
-                File.Delete(@"C:\mas\maia\close_popup.maia");
+                File.Delete(string.Format(Program.root + @"\maia\{0}.{1}.maia", devType, devIP.Replace(".", "_")));
+                File.Delete(Program.root + @"\maia\close_popup.maia");
                 this.Close();
             } else
             {
@@ -82,7 +82,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 timerLabel.Text = timeLeft.ToString();
                 if (timeLeft == 0)
                 {
-                    File.Delete(string.Format(@"C:\mas\maia\{0}.{1}.maia", devType, devIP.Replace(".", "_")));
+                    File.Delete(string.Format(Program.root + @"\maia\{0}.{1}.maia", devType, devIP.Replace(".", "_")));
                     this.Close();
                 }
             }

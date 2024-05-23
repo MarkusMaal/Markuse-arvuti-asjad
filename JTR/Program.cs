@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Management;
 using System.Diagnostics;
+using System.IO;
 
 namespace JTR
 {
@@ -15,6 +16,11 @@ namespace JTR
         {
             Console.WriteLine("\n* Taasjuurutamise tööriist *\n\nProtsessi käigus ÄRGE LÜLITAGE ARVUTIT VÄLJA EGA PEATAGE JTR.EXE PROTSESSI!\nKui juurutamine poole pealt katkestada, ei saa seda arvutit enam selle tööriistaga juurutada!\n");
             Console.WriteLine("Ettevalmistumine");
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.mas\\verifile2.jar"))
+            {
+                Console.WriteLine("    Viga: Arvutis on uuem Verifile versioon, mida see programm ei toeta!");
+                return;
+            }
             Console.WriteLine("    Autentimine...");
             if ((Verifile() == false))
             {

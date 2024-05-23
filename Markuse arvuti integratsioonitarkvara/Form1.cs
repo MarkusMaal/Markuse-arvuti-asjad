@@ -48,9 +48,9 @@ namespace Markuse_arvuti_integratsioonitarkvara
             while (true)
             {
                 string finalout = "";
-                if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\MAS.COM"))
+                if (File.Exists(Program.root + @"\MAS.COM"))
                 {
-                    using (var fs = new FileStream(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\MAS.COM", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    using (var fs = new FileStream(Program.root + @"\MAS.COM", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     using (var sr = new StreamReader(fs, Encoding.Default))
                     {
                         finalout = sr.ReadToEnd();
@@ -68,9 +68,9 @@ namespace Markuse_arvuti_integratsioonitarkvara
                     {
                         try
                         {
-                            File.Copy(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\bg_desktop.png", @"D:\Jagatud\s_1.png");
-                            File.Copy(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\bg_login.png", @"D:\Jagatud\s_2.png");
-                            File.Copy(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\bg_uncommon.png", @"D:\Jagatud\s_3.png");
+                            File.Copy(Program.root + @"\bg_desktop.png", @"D:\Jagatud\s_1.png");
+                            File.Copy(Program.root + @"\bg_login.png", @"D:\Jagatud\s_2.png");
+                            File.Copy(Program.root + @"\bg_uncommon.png", @"D:\Jagatud\s_3.png");
                         }
                         catch
                         {
@@ -81,7 +81,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
                     {
                         try
                         {
-                            File.Copy(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\edition.txt", @"D:\Jagatud\hostinfo");
+                            File.Copy(Program.root + @"\edition.txt", @"D:\Jagatud\hostinfo");
                         }
                         catch { }
                     }
@@ -122,7 +122,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
             while (true)
             {
                 bool willlaunch = true;
-                string txt = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\settings2.sf");
+                string txt = File.ReadAllText(Program.root + "\\settings2.sf");
                 string autorun = txt.Split('=')[1].ToString();
                 bool ar = false;
                 if (autorun == "true")
@@ -143,9 +143,9 @@ namespace Markuse_arvuti_integratsioonitarkvara
                             if (ar)
                             {
                                 willlaunch = false;
-                                if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\running.log"))
+                                if (File.Exists(Program.root + "\\running.log"))
                                 {
-                                    File.Delete(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\running.log");
+                                    File.Delete(Program.root + "\\running.log");
                                 }
                                 string drv;
                                 drv = "bad";
@@ -177,15 +177,15 @@ namespace Markuse_arvuti_integratsioonitarkvara
                                 if (File.Exists("Z:\\E_INFO\\edition.txt")) { drv = "Z"; }
                                 if (drv != "bad")
                                 {
-                                    File.Copy(drv + ":\\Markuse mälupulk\\Markuse mälupulk\\bin\\Debug\\Markuse mälupulk.exe", "C:\\mas\\Mälupulk.exe", true);
+                                    File.Copy(drv + ":\\Markuse mälupulk\\Markuse mälupulk\\bin\\Debug\\Markuse mälupulk.exe", Program.root + "\\Mälupulk.exe", true);
                                 }
                                 else
                                 {
                                     MessageBox.Show("Ei saanud kopeerida ajakohast versiooni Markuse mälupulgalt", "Teade", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                 }
-                                if (File.Exists("C:\\mas\\Mälupulk.exe"))
+                                if (File.Exists(Program.root + "\\Mälupulk.exe"))
                                 {
-                                    Process.Start("C:\\mas\\Mälupulk.exe");
+                                    Process.Start(Program.root + "\\Mälupulk.exe");
                                 }
                                 else
                                 {
@@ -212,7 +212,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
             {
                 this.Close();
             }
-            if(!Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas"))
+            if(!Directory.Exists(Program.root))
             {
                 MessageBox.Show("Markuse arvuti asjade integratsiooniprogramm töötab ainult järgnevates Markuse arvuti asjade väljaannetes:\nUltimate, Pro, Premium, Basic+\n\nKui te näete seda veateadet Markuse arvutis, millel on üks nendest väljaannetest, proovige süsteem juurutada, kasutades /root argumenti.\n\nProgramm sulgub nüüd.", "Tegu ei ole juurutatud Markuse arvutiga", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
@@ -225,21 +225,43 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 return;
             } else
             {
-                if (Verifile() == false)
+                switch (Verifile2())
                 {
-                    MessageBox.Show("Programm tuvastas, et see arvuti ei ole õigesti juurutatud. Palun juurutage arvuti uuesti Markuse arvuti juurutamistarkvaraga.\nTehniline info: Unikaalne juurutamise ID ei ühti juurutamisfaili ja/või süsteemi riistvara konfiguratsiooniga\nProgramm sulgub nüüd.", "Probleem arvutiga", MessageBoxButtons.OK, MessageBoxIcon.Error); this.Close();
+                    case "VERIFIED":
+                        break;
+                    case "FOREIGN":
+                        MessageBox.Show("See programm töötab ainult Markuse arvutis.\n\nVeakood: VF_FOREIGN", "Markuse asjad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        break;
+                    case "FAILED":
+                        MessageBox.Show("Verifile püsivuskontrolli läbimine nurjus.\n\nVeakood: VF_FAILED", "Markuse asjad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        break;
+                    case "TAMPERED":
+                        MessageBox.Show("See arvuti pole õigesti juurutatud. Seda võis põhjustada hiljutine riistvaramuudatus. Palun kasutage juurutamiseks Markuse asjade juurutamistööriista.\n\nVeakood: VF_TAMPERED", "Markuse asjad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        break;
+                    case "LEGACY":
+                        MessageBox.Show("See arvuti on juurutatud vana juurutamistööriistaga. Palun juurutage arvuti uuesti uue juurutamistarkvaraga.\n\nVeakood: VF_LEGACY", "Markuse asjad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        break;
+                }
+
+                if (!Verifile())
+                {
                     Process pr = new Process();
                     pr.StartInfo.FileName = "taskkill.exe";
                     pr.StartInfo.Arguments = "/f /im \"Markuse arvuti integratsioonitarkvara.exe\"";
                     pr.StartInfo.CreateNoWindow = true;
                     pr.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     pr.Start();
+                    Application.Exit();
                     return;
                 }
             }
             try
             { 
-            if(File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\edition.txt")) {  }
+            if(File.Exists(Program.root + "\\edition.txt")) {  }
             } catch
             {
                 MessageBox.Show("Markuse arvuti integratsiooniandmed on rikutud. Palun taasjuurutada süsteem kasutades \reroot argumenti", "edition.txt on rikutud!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -253,31 +275,31 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 pr.Start();
                 return;
             }
-            if (Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\masv"))
+            if (Directory.Exists(Program.root + "v"))
             {
                 käivitaVirtuaalarvutiToolStripMenuItem.Visible = false;
             }
-            if (!Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\masv"))
+            if (!Directory.Exists(Program.root + "v"))
             {
                 sünkroniseeriVersioonToolStripMenuItem.Visible = false;
             }
-            lukustaToolStripMenuItem.Visible = File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\Markuse asjad\\Markuse arvuti lukustamissüsteem.exe");
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\noteopen.txt"))
+            lukustaToolStripMenuItem.Visible = File.Exists(Program.root + "\\Markuse asjad\\Markuse arvuti lukustamissüsteem.exe");
+            if (File.Exists(Program.root + "\\noteopen.txt"))
             {
                 avaTöölauamärkmedToolStripMenuItem.Text = "Sulge töölauamärkmed";
             }
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\scheme.cfg"))
+            if (File.Exists(Program.root + "\\scheme.cfg"))
             {
                 LoadTheme();
             }
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\events.txt"))
+            if (File.Exists(Program.root + "\\events.txt"))
             {
-                string fcont = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\events.txt");
+                string fcont = File.ReadAllText(Program.root + "\\events.txt");
                 specialevents = fcont.Split(';');
             }
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\mas.cnf"))
+            if (File.Exists(Program.root + "\\mas.cnf"))
             {
-                string[] incontent = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\mas.cnf").Split(';');
+                string[] incontent = File.ReadAllText(Program.root + "\\mas.cnf").Split(';');
                 //kas lubada avateade
                 Program.showsplash = Convert.ToBoolean(incontent[0].ToString());
                 //kas lubada erisündmused
@@ -305,16 +327,16 @@ namespace Markuse_arvuti_integratsioonitarkvara
             GetUsers(eemaldaKasutajaToolStripMenuItem);
             GetUsers(avaKasutajaKaustToolStripMenuItem);
             Process p = new Process();
-            p.StartInfo.WorkingDirectory = "C:\\mas";
-            p.StartInfo.FileName = "C:\\mas\\ChangeWallpaper.exe";
-            p.StartInfo.Arguments = "C:\\mas\\bg_desktop.png";
+            p.StartInfo.WorkingDirectory = Program.root + "";
+            p.StartInfo.FileName = Program.root + "\\ChangeWallpaper.exe";
+            p.StartInfo.Arguments = Program.root + "\\bg_desktop.png";
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.CreateNoWindow = true;
             p.Start();
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\mas.cfg"))
+            if (File.Exists(Program.root + "\\mas.cfg"))
             {
-                string[] attribs = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\mas.cfg").Split(';');
+                string[] attribs = File.ReadAllText(Program.root + "\\mas.cfg").Split(';');
                 if (attribs.Length > 2)
                 {
                     if (attribs[2] == "true")
@@ -325,13 +347,13 @@ namespace Markuse_arvuti_integratsioonitarkvara
             }
             secthread.Start();
             cdthread.Start();
-            käivitaVirtuaalarvutiToolStripMenuItem.Visible = Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\vpc");
-            if (File.Exists("C:\\mas\\maia\\server.py"))
+            käivitaVirtuaalarvutiToolStripMenuItem.Visible = Directory.Exists(Program.root + "\\vpc");
+            if (File.Exists(Program.root + "\\maia\\server.py"))
             {
                 p = new Process();
-                p.StartInfo.WorkingDirectory = "C:\\mas\\maia";
+                p.StartInfo.WorkingDirectory = Program.root + "\\maia";
                 p.StartInfo.FileName = "python.exe";
-                p.StartInfo.Arguments = "C:\\mas\\maia\\server.py";
+                p.StartInfo.Arguments = Program.root + "\\maia\\server.py";
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.CreateNoWindow = true;
@@ -417,7 +439,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
         private void AvaKasutajaKaustToolStripMenuItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             string item = e.ClickedItem.ToString();
-            if (File.Exists("C:\\mas\\irunning.log"))
+            if (File.Exists(Program.root + "\\irunning.log"))
             {
                 Process p = new Process();
                 p.StartInfo.FileName = "explorer.exe";
@@ -426,8 +448,8 @@ namespace Markuse_arvuti_integratsioonitarkvara
             }
             else
             {
-                File.WriteAllText("C:\\mas\\foldersignal.log", "");
-                File.WriteAllText("C:\\mas\\path.txt", letter + "\\markuse asjad\\markuse asjad\\" + item);
+                File.WriteAllText(Program.root + "\\foldersignal.log", "");
+                File.WriteAllText(Program.root + "\\path.txt", letter + "\\markuse asjad\\markuse asjad\\" + item);
             }
         }
 
@@ -455,9 +477,9 @@ namespace Markuse_arvuti_integratsioonitarkvara
 
         private void käivitaUniversaalprogrammToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\running.log"))
+            if (File.Exists(Program.root + "\\running.log"))
             {
-                File.Delete(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\running.log");
+                File.Delete(Program.root + "\\running.log");
             }
             Process p = new Process();
             p.StartInfo.FileName = letter + "\\Markuse mälupulk\\Markuse mälupulk\\bin\\Debug\\Markuse mälupulk.exe";
@@ -484,8 +506,8 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 string win = Environment.OSVersion.Version.Major.ToString() + "." + Environment.OSVersion.Version.Minor.ToString();
                 //if (File.Exists("\\mas\\edition.bak")) { File.Delete("\\mas\\edition.bak"); }
                 //File.Move("\\mas\\edition.txt", "\\mas\\edition.bak");
-                File.WriteAllText("\\mas\\edition.txt", "[Edition_info]\n" + edition + "\n" + version + "\n" + build + "\nYes\n" + rooter + "\net-EE\n" + win + "\n" + feats + "\n" + pin + "\n" + name + "\n<null>", Encoding.GetEncoding(1252));
-                File.WriteAllText("\\mas\\edition_1.txt", "[Edition_info];" + edition + ";" + version + ";" + build + ";Yes;" + rooter + ";et-EE;" + win + ";" + feats + ";" + pin + ";" + name + "\n;[this file is for backwards compatibility with legacy programs]", Encoding.GetEncoding(1252));
+                File.WriteAllText(Program.root + "\\edition.txt", "[Edition_info]\n" + edition + "\n" + version + "\n" + build + "\nYes\n" + rooter + "\net-EE\n" + win + "\n" + feats + "\n" + pin + "\n" + name + "\n<null>", Encoding.GetEncoding(1252));
+                File.WriteAllText(Program.root + "\\edition_1.txt", "[Edition_info];" + edition + ";" + version + ";" + build + ";Yes;" + rooter + ";et-EE;" + win + ";" + feats + ";" + pin + ";" + name + "\n;[this file is for backwards compatibility with legacy programs]", Encoding.GetEncoding(1252));
                 if (Program.croot == false) { MessageBox.Show("Juurutusteave salvestati edukalt. Juurutamise lõpuleviimiseks genereerige juurutamise ID juurutamise tööriistaga.", "Juurutamise protsess õnnestus", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             }
             catch (Exception ex)
@@ -518,7 +540,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
         private void avaMarkuseKaustadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TaskMenu1.Close();
-            if (!File.Exists("C:\\mas\\irunning.log"))
+            if (!File.Exists(Program.root + "\\irunning.log"))
             { 
                 foreach (DriveInfo di in DriveInfo.GetDrives())
                 {
@@ -529,13 +551,13 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 }
             } else
             {
-                File.WriteAllText("C:\\mas\\foldersignal.log", "");
+                File.WriteAllText(Program.root + "\\foldersignal.log", "");
 
                 foreach (DriveInfo di in DriveInfo.GetDrives())
                 {
                     if (Directory.Exists(di.RootDirectory.Name + "\\.userdata"))
                     {
-                        File.WriteAllText("C:\\mas\\path.txt", di.RootDirectory.Name);
+                        File.WriteAllText(Program.root + "\\path.txt", di.RootDirectory.Name);
                     }
                 }
             }
@@ -544,21 +566,21 @@ namespace Markuse_arvuti_integratsioonitarkvara
         private void käivitaProjektITSToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TaskMenu1.Close();
-            if (!File.Exists("C:\\mas\\irunning.log"))
+            if (!File.Exists(Program.root + "\\irunning.log"))
             { 
-                Process.Start(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\itstart.bat");
+                Process.Start(Program.root + "\\itstart.bat");
             } else
             {
                 Process p = new Process();
-                p.StartInfo.FileName = "C:\\mas\\redoexp.cmd";
+                p.StartInfo.FileName = Program.root + "\\redoexp.cmd";
                 p.StartInfo.CreateNoWindow = true;
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 p.Start();
-                File.WriteAllText("C:\\mas\\closing.log", "");
-                if (File.Exists(@"C:\mas\noteopen.txt"))
+                File.WriteAllText(Program.root + "\\closing.log", "");
+                if (File.Exists(Program.root + @"\noteopen.txt"))
                 {
-                    File.Delete(@"C:\mas\noteopen.txt");
-                    File.WriteAllText(@"C:\mas\closenote.log", "See fail saadab töölauamärkmete rakendusele käskluse sulgeda. Kui te näete seda teksti, palun kustutage see fail.");
+                    File.Delete(Program.root + @"\noteopen.txt");
+                    File.WriteAllText(Program.root + @"\closenote.log", "See fail saadab töölauamärkmete rakendusele käskluse sulgeda. Kui te näete seda teksti, palun kustutage see fail.");
                     avaTöölauamärkmedToolStripMenuItem.Text = "Ava töölauamärkmed";
                 }
             }
@@ -567,7 +589,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
         private void teaveMarkuseAsjadeKohtaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TaskMenu1.Close();
-            Process.Start(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\Markuse asjad\\Markuse arvuti juhtpaneel.exe");
+            Process.Start(Program.root + "\\Markuse asjad\\Markuse arvuti juhtpaneel.exe");
         }
 
         private void looSüsteemiTaastepunktToolStripMenuItem_Click(object sender, EventArgs e)
@@ -601,7 +623,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 kuvaKõikTöölauaikoonidToolStripMenuItem.Text = "Kuva kõik töölaua&ikoonid";
             }
             Process p = new Process();
-            p.StartInfo.FileName = "C:\\mas\\organize_desktop.bat";
+            p.StartInfo.FileName = Program.root + "\\organize_desktop.bat";
             p.StartInfo.CreateNoWindow = true;
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             p.Start();
@@ -671,9 +693,9 @@ namespace Markuse_arvuti_integratsioonitarkvara
             }
 
             // Kontrolli kas kõik töölauaikoonid on nähtavad
-            if (!File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\irunning.log"))
+            if (!File.Exists(Program.root + @"\irunning.log"))
             {
-                kuvaKõikTöölauaikoonidToolStripMenuItem.Visible = Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\desktop_default");
+                kuvaKõikTöölauaikoonidToolStripMenuItem.Visible = Directory.Exists(Program.root + "\\desktop_default");
             }
 
             if (File.Exists(@"D:\Jagatud\close_vm.log"))
@@ -683,8 +705,8 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 evm.ForeColor = avaMarkuseKaustadToolStripMenuItem.ForeColor;
                 evm.ShowDialog();
                 evm.Dispose();
-                if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\MAS.COM")) { File.Delete(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\MAS.COM"); }
-                if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\WINDOWS.COM")) { File.Delete(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\WINDOWS.COM"); }
+                if (File.Exists(Program.root + @"\MAS.COM")) { File.Delete(Program.root + @"\MAS.COM"); }
+                if (File.Exists(Program.root + @"\WINDOWS.COM")) { File.Delete(Program.root + @"\WINDOWS.COM"); }
             }
             // Kontrolli funktsioonide olemasolu programmi käivitamisel
             if (CheckFlashTimer.Interval == 5000)
@@ -698,7 +720,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
                     avaMarkuseKaustadToolStripMenuItem.Visible = false;
                 }
 
-                if (Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\Markuse asjad\\Interaktiivne töölaud"))
+                if (Directory.Exists(Program.root + "\\Markuse asjad\\Interaktiivne töölaud"))
                 {
                     käivitaProjektITSToolStripMenuItem.Visible = true;
                 }
@@ -706,13 +728,13 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 {
                     käivitaProjektITSToolStripMenuItem.Visible = false;
                 }
-                if (!File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\MarkuStation.exe"))
+                if (!File.Exists(Program.root + "\\MarkuStation.exe"))
                 {
                     käivitaMarkuStationToolStripMenuItem.Visible = false;
                 }
-                else if (!File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\MarkuStation.exe"))
+                else if (!File.Exists(Program.root + "\\MarkuStation.exe"))
                 {
-                    if (!Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\masv"))
+                    if (!Directory.Exists(Program.root + "v"))
                     {
                         käivitaMarkuStationToolStripMenuItem.Visible = true;
                     }
@@ -765,10 +787,10 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 }
             }
             catch { }
-            if (File.Exists("C:\\mas\\runfile.log"))
+            if (File.Exists(Program.root + "\\runfile.log"))
             {
                 List<string> s = new List<string>();
-                using (FileStream fs = new FileStream("C:\\mas\\runfile.log",
+                using (FileStream fs = new FileStream(Program.root + "\\runfile.log",
                                       FileMode.Open,
                                       FileAccess.Read,
                                       FileShare.ReadWrite))
@@ -781,7 +803,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
                         }
                     }
                 }
-                File.Delete("C:\\mas\\runfile.log");
+                File.Delete(Program.root + "\\runfile.log");
                 Process p = new Process();
                 p.StartInfo.FileName = s[0];
                 if (s.Count > 1) { p.StartInfo.Arguments = s[1]; }
@@ -857,7 +879,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
         private void button2_Click(object sender, EventArgs e)
         {
             string s;
-            s = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\edition.txt", Encoding.GetEncoding(1252));
+            s = File.ReadAllText(Program.root + "\\edition.txt", Encoding.GetEncoding(1252));
             string[] attribs = s.Split('\n');
             edition = attribs[1].ToString();
             version = attribs[2].ToString();
@@ -871,7 +893,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
         private void Reloadvalues()
         {
             string s;
-            s = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\edition.txt", Encoding.GetEncoding(1252));
+            s = File.ReadAllText(Program.root + "\\edition.txt", Encoding.GetEncoding(1252));
             string[] attribs = s.Split('\n');
             edition = attribs[1].ToString();
             version = attribs[2].ToString();
@@ -967,21 +989,21 @@ namespace Markuse_arvuti_integratsioonitarkvara
 
         private void RightClickTimer_Tick(object sender, EventArgs e)
         {
-            if (File.Exists("C:\\mas\\opencontext.log"))
+            if (File.Exists(Program.root + "\\opencontext.log"))
             {
                 TaskMenu1.Show(Cursor.Position);
-                File.Delete("C:\\mas\\opencontext.log");
+                File.Delete(Program.root + "\\opencontext.log");
             }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (File.Exists("C:\\mas\\showabout.txt"))
+            if (File.Exists(Program.root + "\\showabout.txt"))
             {
-                File.Delete("C:\\mas\\showabout.txt");
+                File.Delete(Program.root + "\\showabout.txt");
                 teaveMarkuseAsjadeKohtaToolStripMenuItem.PerformClick();
             }
-            if (File.Exists(@"C:\mas\maia\request_permission.maia") || File.Exists(@"C:\mas\maia\request_permission.mai"))
+            if (File.Exists(Program.root + @"\maia\request_permission.maia") || File.Exists(Program.root + @"\maia\request_permission.mai"))
             {
                 if (externalAccess) { 
                     ShowCode sc = new ShowCode();
@@ -990,10 +1012,10 @@ namespace Markuse_arvuti_integratsioonitarkvara
                     sc.ShowDialog();
                 } else
                 {
-                    try { File.Delete(@"C:\mas\maia\request_permission.maia"); } catch { File.Delete(@"C:\mas\maia\request_permission.mai"); }
+                    try { File.Delete(Program.root + @"\maia\request_permission.maia"); } catch { File.Delete(Program.root + @"\maia\request_permission.mai"); }
                 }
             }
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\scheme.cfg"))
+            if (File.Exists(Program.root + "\\scheme.cfg"))
             {
                 LoadTheme();
             }
@@ -1001,7 +1023,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
 
         private void TaskMenu1_Opening(object sender, CancelEventArgs e)
         {
-            if (File.Exists("C:\\mas\\irunning.log"))
+            if (File.Exists(Program.root + "\\irunning.log"))
             {
                 käivitaProjektITSToolStripMenuItem.Text = "Sulge projekt ITS";
                 kuvaKõikTöölauaikoonidToolStripMenuItem.Visible = false;
@@ -1038,7 +1060,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
         void LoadTheme()
         {
             try { 
-            string[] bgfg = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\scheme.cfg").Split(';');
+            string[] bgfg = File.ReadAllText(Program.root + "\\scheme.cfg").Split(';');
             string[] bgs = bgfg[0].ToString().Split(':');
             string[] fgs = bgfg[1].ToString().Split(':');
             Applytheme(Color.FromArgb(Convert.ToInt32(bgs[0].ToString()), Convert.ToInt32(bgs[1].ToString()), Convert.ToInt32(bgs[2].ToString())), Color.FromArgb(Convert.ToInt32(fgs[0].ToString()), Convert.ToInt32(fgs[1].ToString()), Convert.ToInt32(fgs[2].ToString())));
@@ -1052,8 +1074,8 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 { 
                     timer1.Enabled = false;
                     MessageBox.Show("Teema laadimine nurjus. Teemafail võib olla rikutud. Probleemi ajutiseks lahenduseks laadime süsteemiteema.\nTehniline info: " +  ex.Message + "\n" + ex.StackTrace, "Kriitiline probleem", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    File.Delete(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\scheme.cfg");
-                    File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\scheme.cfg", SystemColors.Menu.R.ToString() + ":" + SystemColors.Menu.G.ToString() + ":" + SystemColors.Menu.B.ToString() + ":;" + SystemColors.MenuText.R.ToString() + ":" + SystemColors.MenuText.G.ToString() + ":" + SystemColors.MenuText.B.ToString() + ":;");
+                    File.Delete(Program.root + "\\scheme.cfg");
+                    File.WriteAllText(Program.root + "\\scheme.cfg", SystemColors.Menu.R.ToString() + ":" + SystemColors.Menu.G.ToString() + ":" + SystemColors.Menu.B.ToString() + ":;" + SystemColors.MenuText.R.ToString() + ":" + SystemColors.MenuText.G.ToString() + ":" + SystemColors.MenuText.B.ToString() + ":;");
                     Applytheme(SystemColors.Menu, SystemColors.MenuText);
                     timer1.Enabled = true;
                 }
@@ -1119,7 +1141,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
             this.kasutaWindowsiTeematToolStripMenuItem.ForeColor = fg;
             this.kohandatudToolStripMenuItem.BackColor = bg;
             this.kohandatudToolStripMenuItem.ForeColor = fg;
-            File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\scheme.cfg", bg.R.ToString() + ":" + bg.G.ToString() + ":" + bg.B.ToString() + ":;" + fg.R.ToString() + ":" + fg.G.ToString() + ":" + fg.B.ToString() + ":;");
+            File.WriteAllText(Program.root + "\\scheme.cfg", bg.R.ToString() + ":" + bg.G.ToString() + ":" + bg.B.ToString() + ":;" + fg.R.ToString() + ":" + fg.G.ToString() + ":" + fg.B.ToString() + ":;");
         }
 
 
@@ -1138,140 +1160,48 @@ namespace Markuse_arvuti_integratsioonitarkvara
             Applytheme(Color.SpringGreen, Color.Black);
         }
 
-        private static ManagementObjectSearcher aa = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard");
-
-        static bool Verifile()
+        private string Verifile2()
         {
-            string verificatable = q();
-            string[] savedstr = System.IO.File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\edition.txt", Encoding.GetEncoding(1252)).ToString().Split('\n');
-            string sttr = savedstr[savedstr.Length - 1];
-            Console.WriteLine(verificatable);
-            Console.WriteLine(sttr);
-            if (verificatable == sttr)
+            Process p = new Process
             {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        static string q()
-        {
-            string gg = "CPI" + ff();
-            string pp = j(y(File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\edition.txt", Encoding.GetEncoding(1252))));
-
-            return (h(pp + j(gg.Substring(1, gg.Length - 2) + gg.Substring(0, 1) + gg.Substring(gg.Length - 1, 1))).ToLower() + j(uu()).ToLower() + j(b)).ToLower();
-        }
-
-        static string y(string s)
-        {
-            string[] sar = s.Split('\n');
-            string ns = "";
-            for (int i = 0; i < sar.Length - 3; i++)
-            {
-                ns += sar[i].ToString() + "\n";
-            }
-            return ns;
-        }
-        static string uu()
-        {
-            using (ManagementObjectSearcher o = new ManagementObjectSearcher("SELECT * FROM Win32_BIOS"))
-
-            using (ManagementObjectCollection moc = o.Get())
-
-            {
-
-                StringBuilder t = new StringBuilder();
-                foreach (ManagementObject mo in moc)
-
+                StartInfo = new ProcessStartInfo
                 {
-
-                    string[] BIOSVersions = (string[])mo["BIOSVersion"];
-                    foreach (string version in BIOSVersions)
-                    {
-                        t.AppendLine(string.Format("{0}", version));
-                    }
-
+                    FileName = "java",
+                    Arguments = "-jar " + Program.root + "\\verifile2.jar",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
                 }
-                return t.ToString().Split('\n')[0].ToString();
+            };
+            p.Start();
+            while (!p.StandardOutput.EndOfStream)
+            {
+                string line = p.StandardOutput.ReadLine() ?? "";
+                return line.Split('\n')[0];
             }
+            return "FAILED";
         }
 
-        public static string ff()
-        {
-            string l = string.Empty;
-            ManagementClass mc = new ManagementClass("win32_processor");
-            ManagementObjectCollection moc = mc.GetInstances();
 
-            foreach (ManagementObject mo in moc)
-            {
-                if (l == "")
-                {
-                    l = mo.Properties["processorID"].Value.ToString();
-                    break;
-                }
-            }
-            return l;
-        }
-        public static string j(string z)
+        private bool Verifile()
         {
-            SHA1 cx = SHA1.Create();
-            byte[] xx = Encoding.ASCII.GetBytes(z);
-            byte[] hash = cx.ComputeHash(xx);
-
-            StringBuilder t = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
-            {
-                t.Append(hash[i].ToString("X2"));
-            }
-            return t.ToString();
-        }
-        public static string h(string z)
-        {
-            MD5 cx = MD5.Create();
-            byte[] xx = Encoding.ASCII.GetBytes(z);
-            byte[] hash = cx.ComputeHash(xx);
-
-            StringBuilder t = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
-            {
-                t.Append(hash[i].ToString("X2"));
-            }
-            return t.ToString();
-        }
-        static public string b
-        {
-            get
-            {
-                try
-                {
-                    foreach (ManagementObject queryObj in aa.Get())
-                    {
-                        return queryObj["Product"].ToString();
-                    }
-                    return "";
-                }
-                catch
-                {
-                    return "";
-                }
-            }
+            string assessment = Verifile2();
+            return assessment == "VERIFIED";
         }
 
         private void AvaTöölauamärkmedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(@"C:\mas\noteopen.txt"))
+            if (!File.Exists(Program.root + @"\noteopen.txt"))
             {
-                File.WriteAllText(@"C:\mas\noteopen.txt", "See fail sisaldab informatsiooni töölauamärkmetega töötamiseks.");
-                Process.Start(@"C:\mas\Markuse asjad\TöölauaMärkmed.exe");
+                File.WriteAllText(Program.root + @"\noteopen.txt", "See fail sisaldab informatsiooni töölauamärkmetega töötamiseks.");
+                Process.Start(Program.root + @"\Markuse asjad\TöölauaMärkmed.exe");
                 avaTöölauamärkmedToolStripMenuItem.Text = "Sulge töölauamärkmed";
             }
-            else if (File.Exists(@"C:\mas\noteopen.txt"))
+            else if (File.Exists(Program.root + @"\noteopen.txt"))
             {
-                File.Delete(@"C:\mas\noteopen.txt");
-                File.WriteAllText(@"C:\mas\closenote.log", "See fail saadab töölauamärkmete rakendusele käskluse sulgeda. Kui te näete seda teksti, palun kustutage see fail.");
+                File.Delete(Program.root + @"\noteopen.txt");
+                File.WriteAllText(Program.root + @"\closenote.log", "See fail saadab töölauamärkmete rakendusele käskluse sulgeda. Kui te näete seda teksti, palun kustutage see fail.");
                 avaTöölauamärkmedToolStripMenuItem.Text = "Ava töölauamärkmed";
             }
         }
@@ -1279,7 +1209,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
         private void KäivitaMarkuStationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TaskMenu1.Close();
-            Process.Start(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\MarkuStation.exe");
+            Process.Start(Program.root + "\\MarkuStation.exe");
         }
 
         private void AvaOptilineAndmekandjaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1289,7 +1219,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
         private void KäivitaVirtuaalarvutiToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process p = new Process();
-            string sdir = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\vpc";
+            string sdir = Program.root + "\\vpc";
             string hypervisor = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\Program Files (x86)\\VMware\\VMware Player\\vmware-kvm.exe";
             p.StartInfo.FileName = hypervisor;
             p.StartInfo.WorkingDirectory = sdir;
@@ -1321,7 +1251,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
             wi.ForeColor = avaMarkuseKaustadToolStripMenuItem.ForeColor;
             wi.ShowDialog();
             Process p = new Process();
-            p.StartInfo.FileName = Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\finalize_install.bat";
+            p.StartInfo.FileName = Program.root + @"\finalize_install.bat";
             p.StartInfo.CreateNoWindow = true;
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             p.Start();
@@ -1452,13 +1382,13 @@ namespace Markuse_arvuti_integratsioonitarkvara
                 if (p.ProcessName == "FlashUnlock")
                 {
                     none = false;
-                    File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\stop_authenticate", "now");
+                    File.WriteAllText(Program.root + @"\stop_authenticate", "now");
                 }
             }
             if (none)
             {
                 Process p = new Process();
-                p.StartInfo.FileName = Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\Markuse asjad\FlashUnlock.exe";
+                p.StartInfo.FileName = Program.root + @"\Markuse asjad\FlashUnlock.exe";
                 p.Start();
             }
             TaskMenu1.Close();
@@ -1508,9 +1438,9 @@ namespace Markuse_arvuti_integratsioonitarkvara
             } else
             {
                 Process p = new Process();
-                p.StartInfo.WorkingDirectory = "C:\\mas\\maia";
+                p.StartInfo.WorkingDirectory = Program.root + "\\maia";
                 p.StartInfo.FileName = "python.exe";
-                p.StartInfo.Arguments = "C:\\mas\\maia\\server.py";
+                p.StartInfo.Arguments = Program.root + "\\maia\\server.py";
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.CreateNoWindow = true;
@@ -1554,7 +1484,7 @@ namespace Markuse_arvuti_integratsioonitarkvara
         {
             TaskMenu1.Close();
             Process p = new Process();
-            p.StartInfo.FileName = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\Markuse asjad\\Markuse arvuti lukustamissüsteem.exe";
+            p.StartInfo.FileName = Program.root + "\\Markuse asjad\\Markuse arvuti lukustamissüsteem.exe";
             p.StartInfo.UseShellExecute = false;
             p.Start();
         }

@@ -45,7 +45,7 @@ namespace Markuse_arvuti_juhtpaneel
               (System.Windows.Forms.SystemInformation.PowerStatus.PowerLineStatus ==
                PowerLineStatus.Offline);
 
-            if (Directory.Exists(@"C:\masv"))
+            if (Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\masv"))
             {
                 stuffLabel.Text = "markuse virtuaalarvuti juhtpaneel";
                 this.Text = "Markuse virtuaalarvuti juhtpaneel";
@@ -57,7 +57,7 @@ namespace Markuse_arvuti_juhtpaneel
                 laptop = true;
             }
             string devPrefix = "Markuse arvuti asjade";
-            if (Directory.Exists(@"C:\masv"))
+            if (Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\masv"))
             {
                 devPrefix = "Markuse virtuaalarvuti asjade";
             }
@@ -65,9 +65,31 @@ namespace Markuse_arvuti_juhtpaneel
             {
                 devPrefix = "Markuse sülearvuti asjade";
             }
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\edition.txt"))
-            { 
-                if (Verifile() == true)
+            if (File.Exists(Program.root + "\\edition.txt"))
+            {
+
+                switch (Verifile2())
+                {
+                    case "VERIFIED":
+                        break;
+                    case "FOREIGN":
+                        MessageBox.Show("See programm töötab ainult Markuse arvutis.\n\nVeakood: VF_FOREIGN", "Markuse asjad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        break;
+                    case "FAILED":
+                        MessageBox.Show("Verifile püsivuskontrolli läbimine nurjus.\n\nVeakood: VF_FAILED", "Markuse asjad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        break;
+                    case "TAMPERED":
+                        MessageBox.Show("See arvuti pole õigesti juurutatud. Seda võis põhjustada hiljutine riistvaramuudatus. Palun kasutage juurutamiseks Markuse asjade juurutamistööriista.\n\nVeakood: VF_TAMPERED", "Markuse asjad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        break;
+                    case "LEGACY":
+                        MessageBox.Show("See arvuti on juurutatud vana juurutamistööriistaga. Palun juurutage arvuti uuesti uue juurutamistarkvaraga.\n\nVeakood: VF_LEGACY", "Markuse asjad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        break;
+                }
+                if (Verifile())
                 { 
                     verLabel.Text = "versioon " + version;
                     LoadTheme();
@@ -77,9 +99,9 @@ namespace Markuse_arvuti_juhtpaneel
                     this.Close();
                 }
             }
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\mas.cnf"))
+            if (File.Exists(Program.root + "\\mas.cnf"))
             {
-                string[] cnfs = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\mas.cnf").Split(';');
+                string[] cnfs = File.ReadAllText(Program.root + "\\mas.cnf").Split(';');
                 if (cnfs[0].ToString() == "true")
                 {
                     checkBox1.Checked = true;
@@ -92,7 +114,7 @@ namespace Markuse_arvuti_juhtpaneel
                 {
                     checkBox3.Checked = true;
                 }
-                if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\irunning.log"))
+                if (File.Exists(Program.root + @"\irunning.log"))
                 {
                     this.FormBorderStyle = FormBorderStyle.None;
                     this.WindowState = FormWindowState.Maximized;
@@ -110,13 +132,13 @@ namespace Markuse_arvuti_juhtpaneel
         {
             try
             { 
-                string[] bgfg = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\scheme.cfg").Split(';');
+                string[] bgfg = File.ReadAllText(Program.root + "\\scheme.cfg").Split(';');
                 string[] bgs = bgfg[0].ToString().Split(':');
                 string[] fgs = bgfg[1].ToString().Split(':');
                 Applytheme(Color.FromArgb(Convert.ToInt32(bgs[0].ToString()), Convert.ToInt32(bgs[1].ToString()), Convert.ToInt32(bgs[2].ToString())), Color.FromArgb(Convert.ToInt32(fgs[0].ToString()), Convert.ToInt32(fgs[1].ToString()), Convert.ToInt32(fgs[2].ToString())));
                 if (this.BackgroundImage == null)
                 {
-                    Image img = Image.FromFile(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\bg_common.png");
+                    Image img = Image.FromFile(Program.root + "\\bg_common.png");
                     this.BackgroundImage = img;
                 }
             }
@@ -247,7 +269,7 @@ namespace Markuse_arvuti_juhtpaneel
 
         private void loadButton_Click(object sender, EventArgs e)
         {
-            string file = File.ReadAllLines(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\ms_display.txt")[0];
+            string file = File.ReadAllLines(Program.root + "\\ms_display.txt")[0];
             switch (file)
             {
                 case "internal":
@@ -263,7 +285,7 @@ namespace Markuse_arvuti_juhtpaneel
                     comboBox1.SelectedIndex = 3;
                     break;
             }
-            file = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\setting.txt");
+            file = File.ReadAllText(Program.root + "\\setting.txt");
             nameList.Items.Clear();
             nameList.Items.AddRange(file.Split('\n'));
             nameList.SelectedIndex = 0;
@@ -279,11 +301,11 @@ namespace Markuse_arvuti_juhtpaneel
             cursel = nameList.SelectedItem.ToString();
             if (cursel == "true") { introCheck.Checked = true; }
             if (cursel == "false") { introCheck.Checked = false; }
-            file = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\ms_games.txt");
+            file = File.ReadAllText(Program.root + "\\ms_games.txt");
             file = file.Substring(0, file.Length - 2);
             nameList.Items.Clear();
             nameList.Items.AddRange(file.Split('\n'));
-            file = File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\ms_exec.txt");
+            file = File.ReadAllText(Program.root + "\\ms_exec.txt");
             file = file.Substring(0, file.Length - 2);
             locationList.Items.Clear();
             locationList.Items.AddRange(file.Split('\n'));
@@ -386,7 +408,7 @@ namespace Markuse_arvuti_juhtpaneel
                 default:
                     break;
             }
-            File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\mas\ms_display.txt", scrntype + Environment.NewLine);
+            File.WriteAllText(Program.root + @"\ms_display.txt", scrntype + Environment.NewLine);
             StringBuilder builder = new StringBuilder();
             foreach (string val in nameList.Items)
             {
@@ -397,7 +419,7 @@ namespace Markuse_arvuti_juhtpaneel
             }
             tempBox.Text = builder.ToString();
             tempBox.Text = tempBox.Text + "\n";
-            File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\ms_games.txt", tempBox.Text, Encoding.UTF8);
+            File.WriteAllText(Program.root + "\\ms_games.txt", tempBox.Text, Encoding.UTF8);
             tempBox.Text = "";
             builder = null;
             builder = new StringBuilder();
@@ -410,7 +432,7 @@ namespace Markuse_arvuti_juhtpaneel
             }
             tempBox.Text = builder.ToString();
             tempBox.Text = tempBox.Text + "\n";
-            File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\ms_exec.txt", tempBox.Text, Encoding.UTF8);
+            File.WriteAllText(Program.root + "\\ms_exec.txt", tempBox.Text, Encoding.UTF8);
             tempBox.Text = "";
             if (creepCheck.Checked == true) { tempBox.Text = "true"; }
             if (creepCheck.Checked == false) { tempBox.Text = "false"; }
@@ -418,18 +440,18 @@ namespace Markuse_arvuti_juhtpaneel
             if (specialCheck.Checked == false) { tempBox.Text = tempBox.Text + "\nfalse"; }
             if (introCheck.Checked == true) { tempBox.Text = tempBox.Text + "\ntrue"; }
             if (introCheck.Checked == false) { tempBox.Text = tempBox.Text + "\nfalse"; }
-            File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\setting.txt", tempBox.Text);
+            File.WriteAllText(Program.root + "\\setting.txt", tempBox.Text);
             tempBox.Text = "";
         }
 
         private void boostButton_Click(object sender, EventArgs e)
         {
-            Process.Start(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\boost.vbs");
+            Process.Start(Program.root + "\\boost.vbs");
         }
 
         private void startMS_Click(object sender, EventArgs e)
         {
-            Process.Start(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\MarkuStation.exe");
+            Process.Start(Program.root + "\\MarkuStation.exe");
         }
 
         private void tabControl1_TabIndexChanged(object sender, EventArgs e)
@@ -534,9 +556,9 @@ namespace Markuse_arvuti_juhtpaneel
 
         private void flashButton_Click(object sender, EventArgs e)
         {
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\running.log"))
+            if (File.Exists(Program.root + "\\running.log"))
             {
-                File.Delete(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\running.log");
+                File.Delete(Program.root + "\\running.log");
             }
             string drv;
             drv = "bad";
@@ -569,7 +591,7 @@ namespace Markuse_arvuti_juhtpaneel
             if (drv != "bad")
             {
                 try { 
-                File.Copy(drv + ":\\Markuse mälupulk\\Markuse mälupulk\\bin\\Debug\\Markuse mälupulk.exe", Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\Mälupulk.exe", true);
+                File.Copy(drv + ":\\Markuse mälupulk\\Markuse mälupulk\\bin\\Debug\\Markuse mälupulk.exe", Program.root + "\\Mälupulk.exe", true);
                 } catch
                 {
                     MessageBox.Show("Ei saanud kopeerida ajakohast versiooni Markuse mälupulgalt.\nOlge kindlad, et sisestatud seade oleks kindlasti Markuse mälupulk.\nProgramm käivitub viimase salvestatud mälupulga tarkvara versiooniga...", "Viga", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -579,9 +601,9 @@ namespace Markuse_arvuti_juhtpaneel
             {
                 MessageBox.Show("Ei saanud kopeerida ajakohast versiooni Markuse mälupulgalt", "Teade", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\Mälupulk.exe"))
+            if (File.Exists(Program.root + "\\Mälupulk.exe"))
             {
-                Process.Start(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\Mälupulk.exe");
+                Process.Start(Program.root + "\\Mälupulk.exe");
             }
             else
             {
@@ -631,11 +653,11 @@ namespace Markuse_arvuti_juhtpaneel
 
         private void noteButton_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\sharpNotepad.exe"))
+            if (!File.Exists(Program.root + "\\sharpNotepad.exe"))
             {
-                File.WriteAllBytes(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\sharpNotepad.exe", Properties.Resources.sharpNotepads);
+                File.WriteAllBytes(Program.root + "\\sharpNotepad.exe", Properties.Resources.sharpNotepads);
             }
-            Process.Start(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\sharpNotepad.exe");
+            Process.Start(Program.root + "\\sharpNotepad.exe");
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -932,12 +954,12 @@ namespace Markuse_arvuti_juhtpaneel
                     button3.ForeColor = this.BackColor;
                     button3.BackColor = this.ForeColor;
 
-                    if (Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\masv"))
+                    if (Directory.Exists(Program.root + "\\v"))
                     {
                         label7.Text = "Markuse virtuaalarvuti asjad";
                         goto soup;
                     }
-                    else if (Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas"))
+                    else if (Directory.Exists(Program.root + "\\"))
                     {
                         if (!laptop)
                         {
@@ -1175,11 +1197,11 @@ namespace Markuse_arvuti_juhtpaneel
                 }
             }
 
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.png"))
+            if (File.Exists(Program.root + "\\bg_desktop.png"))
             {
                 try
                 {
-                    desktopBackground.Image = Image.FromFile(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.png");
+                    desktopBackground.Image = Image.FromFile(Program.root + "\\bg_desktop.png");
                 }
                 catch (System.OutOfMemoryException)
                 {
@@ -1188,11 +1210,11 @@ namespace Markuse_arvuti_juhtpaneel
                     desktopBackground.Image = ErrorImage;
                 }
             }
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_login.png"))
+            if (File.Exists(Program.root + "\\bg_login.png"))
             {
                 try
                 {
-                    loginBackground.Image = Image.FromFile(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_login.png");
+                    loginBackground.Image = Image.FromFile(Program.root + "\\bg_login.png");
                 }
                 catch (System.OutOfMemoryException)
                 {
@@ -1201,11 +1223,11 @@ namespace Markuse_arvuti_juhtpaneel
                     loginBackground.Image = ErrorImage;
                 }
             }
-            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_uncommon.png"))
+            if (File.Exists(Program.root + "\\bg_uncommon.png"))
             {
                 try
                 {
-                    miniBackground.Image = Image.FromFile(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_uncommon.png");
+                    miniBackground.Image = Image.FromFile(Program.root + "\\bg_uncommon.png");
                 }
                 catch (System.OutOfMemoryException)
                 {
@@ -1224,7 +1246,7 @@ namespace Markuse_arvuti_juhtpaneel
         private void button4_Click(object sender, EventArgs e)
         {
             Process p = new Process();
-            p.StartInfo.FileName = Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\remas.bat";
+            p.StartInfo.FileName = Program.root + "\\remas.bat";
             p.StartInfo.CreateNoWindow = true;
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             p.Start();
@@ -1238,7 +1260,7 @@ namespace Markuse_arvuti_juhtpaneel
         private void button4_MouseMove(object sender, MouseEventArgs e)
         {
             string devPrefix = "Markuse arvuti asjade";
-            if (Directory.Exists(@"C:\masv"))
+            if (Directory.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + @"\masv"))
             {
                 devPrefix = "Markuse virtuaalarvuti asjade";
             }
@@ -1254,126 +1276,33 @@ namespace Markuse_arvuti_juhtpaneel
             infoLabel.Text = "Siin kuvatakse teave, kui liigutate kursori teatud nupu peale.";
         }
 
-        private static ManagementObjectSearcher aa = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard");
-
-        static bool Verifile()
+        private string Verifile2()
         {
-            string verificatable = q();
-            string[] savedstr = System.IO.File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\edition.txt").ToString().Split('\n');
-            string sttr = savedstr[savedstr.Length - 1];
-            Console.WriteLine(verificatable);
-            Console.WriteLine(sttr);
-            if (verificatable == sttr)
+            Process p = new Process
             {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        static string q()
-        {
-            string gg = "CPI" + ff();
-            string pp = j(y(System.IO.File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE").ToString() + "\\mas\\edition.txt")));
-
-            return (h(pp + j(gg.Substring(1, gg.Length - 2) + gg.Substring(0, 1) + gg.Substring(gg.Length - 1, 1))).ToLower() + j(uu()).ToLower() + j(b)).ToLower();
-        }
-
-        static string y(string s)
-        {
-            string[] sar = s.Split('\n');
-            string ns = "";
-            for (int i = 0; i < sar.Length - 3; i++)
-            {
-                ns += sar[i].ToString() + "\n";
-            }
-            return ns;
-        }
-        static string uu()
-        {
-            using (ManagementObjectSearcher o = new ManagementObjectSearcher("SELECT * FROM Win32_BIOS"))
-
-            using (ManagementObjectCollection moc = o.Get())
-
-            {
-
-                StringBuilder t = new StringBuilder();
-                foreach (ManagementObject mo in moc)
-
+                StartInfo = new ProcessStartInfo
                 {
-
-                    string[] BIOSVersions = (string[])mo["BIOSVersion"];
-                    foreach (string version in BIOSVersions)
-                    {
-                        t.AppendLine(string.Format("{0}", version));
-                    }
-
+                    FileName = "java",
+                    Arguments = "-jar " + Program.root + "\\verifile2.jar",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
                 }
-                return t.ToString().Split('\n')[0].ToString();
+            };
+            p.Start();
+            while (!p.StandardOutput.EndOfStream)
+            {
+                string line = p.StandardOutput.ReadLine() ?? "";
+                return line.Split('\n')[0];
             }
+            return "FAILED";
         }
 
-        public static string ff()
-        {
-            string l = string.Empty;
-            ManagementClass mc = new ManagementClass("win32_processor");
-            ManagementObjectCollection moc = mc.GetInstances();
 
-            foreach (ManagementObject mo in moc)
-            {
-                if (l == "")
-                {
-                    l = mo.Properties["processorID"].Value.ToString();
-                    break;
-                }
-            }
-            return l;
-        }
-        public static string j(string z)
+        private bool Verifile()
         {
-            SHA1 cx = SHA1.Create();
-            byte[] xx = Encoding.ASCII.GetBytes(z);
-            byte[] hash = cx.ComputeHash(xx);
-
-            StringBuilder t = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
-            {
-                t.Append(hash[i].ToString("X2"));
-            }
-            return t.ToString();
-        }
-        public static string h(string z)
-        {
-            MD5 cx = MD5.Create();
-            byte[] xx = Encoding.ASCII.GetBytes(z);
-            byte[] hash = cx.ComputeHash(xx);
-
-            StringBuilder t = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
-            {
-                t.Append(hash[i].ToString("X2"));
-            }
-            return t.ToString();
-        }
-        static public string b
-        {
-            get
-            {
-                try
-                {
-                    foreach (ManagementObject queryObj in aa.Get())
-                    {
-                        return queryObj["Product"].ToString();
-                    }
-                    return "";
-                }
-                catch
-                {
-                    return "";
-                }
-            }
+            return Verifile2() == "VERIFIED";
         }
 
         private void Button5_Click(object sender, EventArgs e)
@@ -1391,7 +1320,7 @@ namespace Markuse_arvuti_juhtpaneel
             else { saveprog += "false;"; }
             if (checkBox3.Checked) { saveprog += "true;"; }
             else { saveprog += "false;"; }
-            File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\mas.cnf", saveprog);
+            File.WriteAllText(Program.root + "\\mas.cnf", saveprog);
         }
 
         private void CheckBox2_CheckedChanged(object sender, EventArgs e)
@@ -1405,7 +1334,7 @@ namespace Markuse_arvuti_juhtpaneel
             else { saveprog += "false;"; }
             if (checkBox2.Checked) { button7.Enabled = true; }
             else { button7.Enabled = false; }
-            File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\mas.cnf", saveprog);
+            File.WriteAllText(Program.root + "\\mas.cnf", saveprog);
         }
 
         private void Button6_Click(object sender, EventArgs e)
@@ -1425,26 +1354,26 @@ namespace Markuse_arvuti_juhtpaneel
             miniBackground.Image.Dispose();
             //võta kasutusele ajutine taustapilt
             Process pr = new Process();
-            pr.StartInfo.FileName = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\ChangeWallpaper.exe";
+            pr.StartInfo.FileName = Program.root + "\\ChangeWallpaper.exe";
             pr.StartInfo.UseShellExecute = false;
             pr.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             pr.StartInfo.CreateNoWindow = true;
-            pr.StartInfo.Arguments = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_login.png";
+            pr.StartInfo.Arguments = Program.root + "\\bg_login.png";
             pr.Start();
             pr.StartInfo.FileName = "cmd.exe";
-            pr.StartInfo.Arguments = "/k move " + Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.png " + Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.temp";
+            pr.StartInfo.Arguments = "/k move " + Program.root + "\\bg_desktop.png " + Program.root + "\\bg_desktop.temp";
             pr.Start();
-            while (!File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.temp")) { }
-            pr.StartInfo.Arguments = "/k move " + Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_uncommon.png " + Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.png";
+            while (!File.Exists(Program.root + "\\bg_desktop.temp")) { }
+            pr.StartInfo.Arguments = "/k move " + Program.root + "\\bg_uncommon.png " + Program.root + "\\bg_desktop.png";
             pr.Start();
-            while (!File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.png")) { }
-            pr.StartInfo.Arguments = "/k move " + Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.temp " + Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_uncommon.png";
+            while (!File.Exists(Program.root + "\\bg_desktop.png")) { }
+            pr.StartInfo.Arguments = "/k move " + Program.root + "\\bg_desktop.temp " + Program.root + "\\bg_uncommon.png";
             pr.Start();
-            while (!File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_uncommon.png")) { }
+            while (!File.Exists(Program.root + "\\bg_uncommon.png")) { }
             pr.StartInfo.Arguments = "";
             pr.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
             pr.StartInfo.CreateNoWindow = false;
-            pr.StartInfo.FileName = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\Markuse asjad\\Markuse arvuti integratsioonitarkvara.exe";
+            pr.StartInfo.FileName = Program.root + "\\Markuse asjad\\Markuse arvuti integratsioonitarkvara.exe";
             pr.Start();
             ReloadPreviews();
             foreach (Process p in Process.GetProcesses())
@@ -1464,9 +1393,9 @@ namespace Markuse_arvuti_juhtpaneel
         {
             if (checkBox2.Checked == true)
             { 
-                if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\events.txt"))
+                if (File.Exists(Program.root + "\\events.txt"))
                 {
-                    Process.Start(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\events.txt");
+                    Process.Start(Program.root + "\\events.txt");
                 } else
                 {
                     MessageBox.Show("Sündmuste faili ei eksisteeri", "Probleem", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1495,26 +1424,26 @@ namespace Markuse_arvuti_juhtpaneel
                     }
                 }
                 Process pr = new Process();
-                pr.StartInfo.FileName = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\ChangeWallpaper.exe";
+                pr.StartInfo.FileName = Program.root + "\\ChangeWallpaper.exe";
                 pr.StartInfo.UseShellExecute = false;
                 pr.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 pr.StartInfo.CreateNoWindow = true;
-                pr.StartInfo.Arguments = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_login.png";
+                pr.StartInfo.Arguments = Program.root + "\\bg_login.png";
                 pr.Start();
                 pr.StartInfo.FileName = "cmd.exe";
-                pr.StartInfo.Arguments = "/k move " + Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.png " + Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.temp";
+                pr.StartInfo.Arguments = "/k move " + Program.root + "\\bg_desktop.png " + Program.root + "\\bg_desktop.temp";
                 pr.Start();
-                while (!File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.temp")) { }
-                File.Copy(openImageDialog.FileName, Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.png");
-                File.Delete(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.temp");
+                while (!File.Exists(Program.root + "\\bg_desktop.temp")) { }
+                File.Copy(openImageDialog.FileName, Program.root + "\\bg_desktop.png");
+                File.Delete(Program.root + "\\bg_desktop.temp");
                 pr.StartInfo.Arguments = "";
                 pr.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                 pr.StartInfo.CreateNoWindow = false;
-                pr.StartInfo.FileName = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\Markuse asjad\\Markuse arvuti integratsioonitarkvara.exe";
+                pr.StartInfo.FileName = Program.root + "\\Markuse asjad\\Markuse arvuti integratsioonitarkvara.exe";
                 pr.Start();
-                if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.png"))
+                if (File.Exists(Program.root + "\\bg_desktop.png"))
                 {
-                    desktopBackground.Image = Image.FromFile(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.png");
+                    desktopBackground.Image = Image.FromFile(Program.root + "\\bg_desktop.png");
                 }
                 foreach (Process p in Process.GetProcesses())
                 {
@@ -1539,11 +1468,11 @@ namespace Markuse_arvuti_juhtpaneel
             if (openImageDialog.ShowDialog() == DialogResult.OK)
             {
                 loginBackground.Image.Dispose();
-                File.Delete(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_login.png");
-                File.Copy(openImageDialog.FileName, Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_login.png");
-                if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_desktop.png"))
+                File.Delete(Program.root + "\\bg_login.png");
+                File.Copy(openImageDialog.FileName, Program.root + "\\bg_login.png");
+                if (File.Exists(Program.root + "\\bg_desktop.png"))
                 {
-                    loginBackground.Image = Image.FromFile(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_login.png");
+                    loginBackground.Image = Image.FromFile(Program.root + "\\bg_login.png");
                 }
             }
         }
@@ -1558,11 +1487,11 @@ namespace Markuse_arvuti_juhtpaneel
             if (openImageDialog.ShowDialog() == DialogResult.OK)
             {
                 miniBackground.Image.Dispose();
-                File.Delete(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_uncommon.png");
-                File.Copy(openImageDialog.FileName, Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_uncommon.png");
-                if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_uncommon.png"))
+                File.Delete(Program.root + "\\bg_uncommon.png");
+                File.Copy(openImageDialog.FileName, Program.root + "\\bg_uncommon.png");
+                if (File.Exists(Program.root + "\\bg_uncommon.png"))
                 {
-                    miniBackground.Image = Image.FromFile(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\bg_uncommon.png");
+                    miniBackground.Image = Image.FromFile(Program.root + "\\bg_uncommon.png");
                 }
             }
         }
@@ -1578,7 +1507,7 @@ namespace Markuse_arvuti_juhtpaneel
             if (themeColor.ShowDialog() == DialogResult.OK)
             {
                 timer2.Enabled = false;
-                File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\scheme.cfg", themeColor.Color.R.ToString() + ":" + themeColor.Color.G.ToString() + ":" + themeColor.Color.B.ToString() + ":;" + this.ForeColor.R + ":" + this.ForeColor.G + ":" + this.ForeColor.B + ":;");
+                File.WriteAllText(Program.root + "\\scheme.cfg", themeColor.Color.R.ToString() + ":" + themeColor.Color.G.ToString() + ":" + themeColor.Color.B.ToString() + ":;" + this.ForeColor.R + ":" + this.ForeColor.G + ":" + this.ForeColor.B + ":;");
                 timer2.Enabled = true;
                 button1.PerformClick();
                 button5.PerformClick();
@@ -1591,7 +1520,7 @@ namespace Markuse_arvuti_juhtpaneel
             if (themeColor.ShowDialog() == DialogResult.OK)
             {
                 timer2.Enabled = false;
-                File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\scheme.cfg", this.BackColor.R + ":" + this.BackColor.G + ":" + this.BackColor.B + ":;" + themeColor.Color.R.ToString() + ":" + themeColor.Color.G.ToString() + ":" + themeColor.Color.B.ToString() + ":;");
+                File.WriteAllText(Program.root + "\\scheme.cfg", this.BackColor.R + ":" + this.BackColor.G + ":" + this.BackColor.B + ":;" + themeColor.Color.R.ToString() + ":" + themeColor.Color.G.ToString() + ":" + themeColor.Color.B.ToString() + ":;");
                 timer2.Enabled = true;
                 button1.PerformClick();
                 button5.PerformClick();
@@ -1612,7 +1541,7 @@ namespace Markuse_arvuti_juhtpaneel
             else if (checkBox2.Checked == false) { saveprog += "false;"; }
             if (checkBox3.Checked == true) { saveprog += "true;"; }
             else if (checkBox3.Checked == false) { saveprog += "false;"; }
-            File.WriteAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\mas.cnf", saveprog);
+            File.WriteAllText(Program.root + "\\mas.cnf", saveprog);
         }
 
         private void button10_Click_1(object sender, EventArgs e)

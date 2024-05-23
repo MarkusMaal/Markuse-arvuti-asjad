@@ -24,7 +24,7 @@ namespace Markuse_arvuti_juhtpaneel
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (System.IO.File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\‫‬‭‮‪‫‬‭‮5ke5.-‫‬‭‮‪‫‬‭‮"))
+                if (System.IO.File.Exists(Program.root + "\\‫‬‭‮‪‫‬‭‮5ke5.-‫‬‭‮‪‫‬‭‮"))
                 {
                     string authkey = IncStr((textBox1.Text.Length - 126).ToString() + "M45" + String.Concat(textBox1.Text.Reverse()));
                     byte[] realkey = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(String.Concat(authkey.Reverse())));
@@ -33,7 +33,7 @@ namespace Markuse_arvuti_juhtpaneel
                     {
                         newhash += b.ToString("X2");
                     }
-                    if (newhash == String.Concat(File.ReadAllText(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\‫‬‭‮‪‫‬‭‮5ke5.-‫‬‭‮‪‫‬‭‮").Reverse()))
+                    if (newhash == String.Concat(File.ReadAllText(Program.root + "\\‫‬‭‮‪‫‬‭‮5ke5.-‫‬‭‮‪‫‬‭‮").Reverse()))
                     {
                         File.WriteAllBytes(Environment.GetEnvironmentVariable("TEMP") + "\\rootimg.exe", Properties.Resources.RootImg);
                         File.WriteAllBytes(Environment.GetEnvironmentVariable("TEMP") + "\\JTR.exe", Properties.Resources.JTR);

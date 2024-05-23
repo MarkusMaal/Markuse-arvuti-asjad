@@ -32,39 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.TeateIkoon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.TaskMenu1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.juurutaSeeArvutiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.CheckFlashTimer = new System.Windows.Forms.Timer(this.components);
-            this.DevTimer = new System.Windows.Forms.Timer(this.components);
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.EditionBox = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.VersionBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.BuildBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.ITBox = new System.Windows.Forms.CheckBox();
-            this.IPBox = new System.Windows.Forms.CheckBox();
-            this.WXBox = new System.Windows.Forms.CheckBox();
-            this.GPBox = new System.Windows.Forms.CheckBox();
-            this.CSBox = new System.Windows.Forms.CheckBox();
-            this.RDBox = new System.Windows.Forms.CheckBox();
-            this.TSMMBox = new System.Windows.Forms.CheckBox();
-            this.DXBox = new System.Windows.Forms.CheckBox();
-            this.LTBox = new System.Windows.Forms.CheckBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.NameBox = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.RightClickTimer = new System.Windows.Forms.Timer(this.components);
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.schemeDialog = new System.Windows.Forms.ColorDialog();
             this.avaMarkuseKaustadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.markuseMälupulkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.käivitaUniversaalprogrammToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,6 +68,39 @@
             this.kohandatudToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.teaveMarkuseAsjadeKohtaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sulgeSeeMenüüToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.juurutaSeeArvutiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.CheckFlashTimer = new System.Windows.Forms.Timer(this.components);
+            this.DevTimer = new System.Windows.Forms.Timer(this.components);
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.EditionBox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.VersionBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.BuildBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.ITBox = new System.Windows.Forms.CheckBox();
+            this.IPBox = new System.Windows.Forms.CheckBox();
+            this.WXBox = new System.Windows.Forms.CheckBox();
+            this.GPBox = new System.Windows.Forms.CheckBox();
+            this.CSBox = new System.Windows.Forms.CheckBox();
+            this.RDBox = new System.Windows.Forms.CheckBox();
+            this.TSMMBox = new System.Windows.Forms.CheckBox();
+            this.DXBox = new System.Windows.Forms.CheckBox();
+            this.LTBox = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.NameBox = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.RightClickTimer = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.schemeDialog = new System.Windows.Forms.ColorDialog();
             this.TaskMenu1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -137,314 +137,6 @@
             this.TaskMenu1.Size = new System.Drawing.Size(301, 400);
             this.TaskMenu1.Opening += new System.ComponentModel.CancelEventHandler(this.TaskMenu1_Opening);
             this.TaskMenu1.Opened += new System.EventHandler(this.TaskMenu1_Opened);
-            // 
-            // juurutaSeeArvutiToolStripMenuItem
-            // 
-            this.juurutaSeeArvutiToolStripMenuItem.Name = "juurutaSeeArvutiToolStripMenuItem";
-            this.juurutaSeeArvutiToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
-            this.juurutaSeeArvutiToolStripMenuItem.Text = "&Juuruta see arvuti";
-            this.juurutaSeeArvutiToolStripMenuItem.Visible = false;
-            this.juurutaSeeArvutiToolStripMenuItem.Click += new System.EventHandler(this.juurutaSeeArvutiToolStripMenuItem_Click);
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(16, 395);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(91, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Juurutamine";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 15F);
-            this.label1.Location = new System.Drawing.Point(7, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 28);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Juurutamine";
-            // 
-            // CheckFlashTimer
-            // 
-            this.CheckFlashTimer.Enabled = true;
-            this.CheckFlashTimer.Interval = 5000;
-            this.CheckFlashTimer.Tick += new System.EventHandler(this.CheckFlashTimer_Tick);
-            // 
-            // DevTimer
-            // 
-            this.DevTimer.Tick += new System.EventHandler(this.DevTimer_Tick);
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Location = new System.Drawing.Point(9, 37);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(454, 29);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "TÄHELEPANU! See toiming on mõeldud ainult arendamiseks ning tavakasutaja ei peaks" +
-    " neid sätteid käsitsi muutma. Kui see aken avanes ootamatult, sulgege see vajuta" +
-    "des X nuppu.";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 77);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(54, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Väljaanne";
-            // 
-            // EditionBox
-            // 
-            this.EditionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.EditionBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.EditionBox.FormattingEnabled = true;
-            this.EditionBox.Items.AddRange(new object[] {
-            "Ultimate",
-            "Pro",
-            "Premium",
-            "Basic+"});
-            this.EditionBox.Location = new System.Drawing.Point(102, 74);
-            this.EditionBox.Name = "EditionBox";
-            this.EditionBox.Size = new System.Drawing.Size(118, 21);
-            this.EditionBox.TabIndex = 5;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 107);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(85, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Versiooninumber";
-            // 
-            // VersionBox
-            // 
-            this.VersionBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.VersionBox.Location = new System.Drawing.Point(102, 104);
-            this.VersionBox.Name = "VersionBox";
-            this.VersionBox.Size = new System.Drawing.Size(118, 20);
-            this.VersionBox.TabIndex = 7;
-            this.VersionBox.Text = "0.0";
-            this.VersionBox.TextChanged += new System.EventHandler(this.VersionBox_TextChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 137);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(68, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Järgunumber";
-            // 
-            // BuildBox
-            // 
-            this.BuildBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.BuildBox.Location = new System.Drawing.Point(102, 134);
-            this.BuildBox.Name = "BuildBox";
-            this.BuildBox.Size = new System.Drawing.Size(118, 20);
-            this.BuildBox.TabIndex = 9;
-            this.BuildBox.Text = "A00000a";
-            this.BuildBox.TextChanged += new System.EventHandler(this.BuildBox_TextChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 169);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(164, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Juurutatud: Jah (automaatne väli)";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 192);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(201, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Juurutaja: Markus Maal (automaatne väli)";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 214);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(144, 13);
-            this.label8.TabIndex = 12;
-            this.label8.Text = "Keel: et-EE (automaatne väli)";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 239);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(201, 13);
-            this.label9.TabIndex = 13;
-            this.label9.Text = "Windowsi versioon: 6.4 (automaatne väli)";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(13, 284);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(67, 13);
-            this.label10.TabIndex = 14;
-            this.label10.Text = "Funktsioonid";
-            // 
-            // ITBox
-            // 
-            this.ITBox.AutoSize = true;
-            this.ITBox.Location = new System.Drawing.Point(16, 300);
-            this.ITBox.Name = "ITBox";
-            this.ITBox.Size = new System.Drawing.Size(122, 17);
-            this.ITBox.TabIndex = 15;
-            this.ITBox.Text = "Interaktiivne töölaud";
-            this.ITBox.UseVisualStyleBackColor = true;
-            // 
-            // IPBox
-            // 
-            this.IPBox.AutoSize = true;
-            this.IPBox.Checked = true;
-            this.IPBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.IPBox.Enabled = false;
-            this.IPBox.Location = new System.Drawing.Point(16, 323);
-            this.IPBox.Name = "IPBox";
-            this.IPBox.Size = new System.Drawing.Size(128, 17);
-            this.IPBox.TabIndex = 16;
-            this.IPBox.Text = "Integratsioonitarkvara";
-            this.IPBox.UseVisualStyleBackColor = true;
-            // 
-            // WXBox
-            // 
-            this.WXBox.AutoSize = true;
-            this.WXBox.Enabled = false;
-            this.WXBox.Location = new System.Drawing.Point(153, 300);
-            this.WXBox.Name = "WXBox";
-            this.WXBox.Size = new System.Drawing.Size(85, 17);
-            this.WXBox.TabIndex = 17;
-            this.WXBox.Text = "Windows 10";
-            this.WXBox.UseVisualStyleBackColor = true;
-            // 
-            // GPBox
-            // 
-            this.GPBox.AutoSize = true;
-            this.GPBox.Location = new System.Drawing.Point(153, 323);
-            this.GPBox.Name = "GPBox";
-            this.GPBox.Size = new System.Drawing.Size(86, 17);
-            this.GPBox.TabIndex = 18;
-            this.GPBox.Text = "Grupipoliitika";
-            this.GPBox.UseVisualStyleBackColor = true;
-            // 
-            // CSBox
-            // 
-            this.CSBox.AutoSize = true;
-            this.CSBox.Location = new System.Drawing.Point(244, 300);
-            this.CSBox.Name = "CSBox";
-            this.CSBox.Size = new System.Drawing.Size(139, 17);
-            this.CSBox.TabIndex = 19;
-            this.CSBox.Text = "Klassikaline start menüü";
-            this.CSBox.UseVisualStyleBackColor = true;
-            // 
-            // RDBox
-            // 
-            this.RDBox.AutoSize = true;
-            this.RDBox.Location = new System.Drawing.Point(244, 323);
-            this.RDBox.Name = "RDBox";
-            this.RDBox.Size = new System.Drawing.Size(92, 17);
-            this.RDBox.TabIndex = 20;
-            this.RDBox.Text = "Kaugjuhtimine";
-            this.RDBox.UseVisualStyleBackColor = true;
-            // 
-            // TSMMBox
-            // 
-            this.TSMMBox.AutoSize = true;
-            this.TSMMBox.Checked = true;
-            this.TSMMBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TSMMBox.Enabled = false;
-            this.TSMMBox.Location = new System.Drawing.Point(16, 346);
-            this.TSMMBox.Name = "TSMMBox";
-            this.TSMMBox.Size = new System.Drawing.Size(126, 17);
-            this.TSMMBox.TabIndex = 21;
-            this.TSMMBox.Text = "Standardfunktsioonid";
-            this.TSMMBox.UseVisualStyleBackColor = true;
-            // 
-            // DXBox
-            // 
-            this.DXBox.AutoSize = true;
-            this.DXBox.Location = new System.Drawing.Point(153, 346);
-            this.DXBox.Name = "DXBox";
-            this.DXBox.Size = new System.Drawing.Size(74, 17);
-            this.DXBox.TabIndex = 22;
-            this.DXBox.Text = "Rainmeter";
-            this.DXBox.UseVisualStyleBackColor = true;
-            // 
-            // LTBox
-            // 
-            this.LTBox.AutoSize = true;
-            this.LTBox.Location = new System.Drawing.Point(244, 346);
-            this.LTBox.Name = "LTBox";
-            this.LTBox.Size = new System.Drawing.Size(146, 17);
-            this.LTBox.TabIndex = 23;
-            this.LTBox.Text = "LiveTuner optimeerimised";
-            this.LTBox.UseVisualStyleBackColor = true;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(13, 262);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(166, 13);
-            this.label11.TabIndex = 24;
-            this.label11.Text = "PIN kood: 0000 (automaatne väli)";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(13, 369);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(27, 13);
-            this.label12.TabIndex = 25;
-            this.label12.Text = "Nimi";
-            // 
-            // NameBox
-            // 
-            this.NameBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.NameBox.Location = new System.Drawing.Point(102, 366);
-            this.NameBox.Name = "NameBox";
-            this.NameBox.Size = new System.Drawing.Size(118, 20);
-            this.NameBox.TabIndex = 26;
-            this.NameBox.Text = "Alpha";
-            this.NameBox.TextChanged += new System.EventHandler(this.NameBox_TextChanged);
-            // 
-            // button2
-            // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button2.Location = new System.Drawing.Point(113, 395);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(249, 23);
-            this.button2.TabIndex = 27;
-            this.button2.Text = "Laadi sobivad andmed praegusest juurutusfailist";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // RightClickTimer
-            // 
-            this.RightClickTimer.Enabled = true;
-            this.RightClickTimer.Interval = 50;
-            this.RightClickTimer.Tick += new System.EventHandler(this.RightClickTimer_Tick);
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 5000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // avaMarkuseKaustadToolStripMenuItem
             // 
@@ -794,7 +486,7 @@
             this.teaveMarkuseAsjadeKohtaToolStripMenuItem.Name = "teaveMarkuseAsjadeKohtaToolStripMenuItem";
             this.teaveMarkuseAsjadeKohtaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.H)));
             this.teaveMarkuseAsjadeKohtaToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
-            this.teaveMarkuseAsjadeKohtaToolStripMenuItem.Text = "Markuse asjade teave ja &haldamine";
+            this.teaveMarkuseAsjadeKohtaToolStripMenuItem.Text = "Markuse arvuti juhtpaneel";
             this.teaveMarkuseAsjadeKohtaToolStripMenuItem.Click += new System.EventHandler(this.teaveMarkuseAsjadeKohtaToolStripMenuItem_Click);
             // 
             // sulgeSeeMenüüToolStripMenuItem
@@ -805,6 +497,314 @@
             this.sulgeSeeMenüüToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
             this.sulgeSeeMenüüToolStripMenuItem.Text = "Sulge see menüü";
             this.sulgeSeeMenüüToolStripMenuItem.Click += new System.EventHandler(this.sulgeSeeMenüüToolStripMenuItem_Click);
+            // 
+            // juurutaSeeArvutiToolStripMenuItem
+            // 
+            this.juurutaSeeArvutiToolStripMenuItem.Name = "juurutaSeeArvutiToolStripMenuItem";
+            this.juurutaSeeArvutiToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
+            this.juurutaSeeArvutiToolStripMenuItem.Text = "&Juuruta see arvuti";
+            this.juurutaSeeArvutiToolStripMenuItem.Visible = false;
+            this.juurutaSeeArvutiToolStripMenuItem.Click += new System.EventHandler(this.juurutaSeeArvutiToolStripMenuItem_Click);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button1.Location = new System.Drawing.Point(16, 395);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(91, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Juurutamine";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.label1.Location = new System.Drawing.Point(7, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(119, 28);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Juurutamine";
+            // 
+            // CheckFlashTimer
+            // 
+            this.CheckFlashTimer.Enabled = true;
+            this.CheckFlashTimer.Interval = 5000;
+            this.CheckFlashTimer.Tick += new System.EventHandler(this.CheckFlashTimer_Tick);
+            // 
+            // DevTimer
+            // 
+            this.DevTimer.Tick += new System.EventHandler(this.DevTimer_Tick);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Location = new System.Drawing.Point(9, 37);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(454, 29);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "TÄHELEPANU! See toiming on mõeldud ainult arendamiseks ning tavakasutaja ei peaks" +
+    " neid sätteid käsitsi muutma. Kui see aken avanes ootamatult, sulgege see vajuta" +
+    "des X nuppu.";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 77);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(54, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Väljaanne";
+            // 
+            // EditionBox
+            // 
+            this.EditionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.EditionBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EditionBox.FormattingEnabled = true;
+            this.EditionBox.Items.AddRange(new object[] {
+            "Ultimate",
+            "Pro",
+            "Premium",
+            "Basic+"});
+            this.EditionBox.Location = new System.Drawing.Point(102, 74);
+            this.EditionBox.Name = "EditionBox";
+            this.EditionBox.Size = new System.Drawing.Size(118, 21);
+            this.EditionBox.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 107);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(85, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Versiooninumber";
+            // 
+            // VersionBox
+            // 
+            this.VersionBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.VersionBox.Location = new System.Drawing.Point(102, 104);
+            this.VersionBox.Name = "VersionBox";
+            this.VersionBox.Size = new System.Drawing.Size(118, 20);
+            this.VersionBox.TabIndex = 7;
+            this.VersionBox.Text = "0.0";
+            this.VersionBox.TextChanged += new System.EventHandler(this.VersionBox_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 137);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(68, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Järgunumber";
+            // 
+            // BuildBox
+            // 
+            this.BuildBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BuildBox.Location = new System.Drawing.Point(102, 134);
+            this.BuildBox.Name = "BuildBox";
+            this.BuildBox.Size = new System.Drawing.Size(118, 20);
+            this.BuildBox.TabIndex = 9;
+            this.BuildBox.Text = "A00000a";
+            this.BuildBox.TextChanged += new System.EventHandler(this.BuildBox_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 169);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(164, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Juurutatud: Jah (automaatne väli)";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 192);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(201, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Juurutaja: Markus Maal (automaatne väli)";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 214);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(144, 13);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "Keel: et-EE (automaatne väli)";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 239);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(201, 13);
+            this.label9.TabIndex = 13;
+            this.label9.Text = "Windowsi versioon: 6.4 (automaatne väli)";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(13, 284);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(67, 13);
+            this.label10.TabIndex = 14;
+            this.label10.Text = "Funktsioonid";
+            // 
+            // ITBox
+            // 
+            this.ITBox.AutoSize = true;
+            this.ITBox.Location = new System.Drawing.Point(16, 300);
+            this.ITBox.Name = "ITBox";
+            this.ITBox.Size = new System.Drawing.Size(122, 17);
+            this.ITBox.TabIndex = 15;
+            this.ITBox.Text = "Interaktiivne töölaud";
+            this.ITBox.UseVisualStyleBackColor = true;
+            // 
+            // IPBox
+            // 
+            this.IPBox.AutoSize = true;
+            this.IPBox.Checked = true;
+            this.IPBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.IPBox.Enabled = false;
+            this.IPBox.Location = new System.Drawing.Point(16, 323);
+            this.IPBox.Name = "IPBox";
+            this.IPBox.Size = new System.Drawing.Size(128, 17);
+            this.IPBox.TabIndex = 16;
+            this.IPBox.Text = "Integratsioonitarkvara";
+            this.IPBox.UseVisualStyleBackColor = true;
+            // 
+            // WXBox
+            // 
+            this.WXBox.AutoSize = true;
+            this.WXBox.Enabled = false;
+            this.WXBox.Location = new System.Drawing.Point(153, 300);
+            this.WXBox.Name = "WXBox";
+            this.WXBox.Size = new System.Drawing.Size(85, 17);
+            this.WXBox.TabIndex = 17;
+            this.WXBox.Text = "Windows 10";
+            this.WXBox.UseVisualStyleBackColor = true;
+            // 
+            // GPBox
+            // 
+            this.GPBox.AutoSize = true;
+            this.GPBox.Location = new System.Drawing.Point(153, 323);
+            this.GPBox.Name = "GPBox";
+            this.GPBox.Size = new System.Drawing.Size(86, 17);
+            this.GPBox.TabIndex = 18;
+            this.GPBox.Text = "Grupipoliitika";
+            this.GPBox.UseVisualStyleBackColor = true;
+            // 
+            // CSBox
+            // 
+            this.CSBox.AutoSize = true;
+            this.CSBox.Location = new System.Drawing.Point(244, 300);
+            this.CSBox.Name = "CSBox";
+            this.CSBox.Size = new System.Drawing.Size(139, 17);
+            this.CSBox.TabIndex = 19;
+            this.CSBox.Text = "Klassikaline start menüü";
+            this.CSBox.UseVisualStyleBackColor = true;
+            // 
+            // RDBox
+            // 
+            this.RDBox.AutoSize = true;
+            this.RDBox.Location = new System.Drawing.Point(244, 323);
+            this.RDBox.Name = "RDBox";
+            this.RDBox.Size = new System.Drawing.Size(92, 17);
+            this.RDBox.TabIndex = 20;
+            this.RDBox.Text = "Kaugjuhtimine";
+            this.RDBox.UseVisualStyleBackColor = true;
+            // 
+            // TSMMBox
+            // 
+            this.TSMMBox.AutoSize = true;
+            this.TSMMBox.Checked = true;
+            this.TSMMBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TSMMBox.Enabled = false;
+            this.TSMMBox.Location = new System.Drawing.Point(16, 346);
+            this.TSMMBox.Name = "TSMMBox";
+            this.TSMMBox.Size = new System.Drawing.Size(126, 17);
+            this.TSMMBox.TabIndex = 21;
+            this.TSMMBox.Text = "Standardfunktsioonid";
+            this.TSMMBox.UseVisualStyleBackColor = true;
+            // 
+            // DXBox
+            // 
+            this.DXBox.AutoSize = true;
+            this.DXBox.Location = new System.Drawing.Point(153, 346);
+            this.DXBox.Name = "DXBox";
+            this.DXBox.Size = new System.Drawing.Size(74, 17);
+            this.DXBox.TabIndex = 22;
+            this.DXBox.Text = "Rainmeter";
+            this.DXBox.UseVisualStyleBackColor = true;
+            // 
+            // LTBox
+            // 
+            this.LTBox.AutoSize = true;
+            this.LTBox.Location = new System.Drawing.Point(244, 346);
+            this.LTBox.Name = "LTBox";
+            this.LTBox.Size = new System.Drawing.Size(146, 17);
+            this.LTBox.TabIndex = 23;
+            this.LTBox.Text = "LiveTuner optimeerimised";
+            this.LTBox.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(13, 262);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(166, 13);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "PIN kood: 0000 (automaatne väli)";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(13, 369);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(27, 13);
+            this.label12.TabIndex = 25;
+            this.label12.Text = "Nimi";
+            // 
+            // NameBox
+            // 
+            this.NameBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NameBox.Location = new System.Drawing.Point(102, 366);
+            this.NameBox.Name = "NameBox";
+            this.NameBox.Size = new System.Drawing.Size(118, 20);
+            this.NameBox.TabIndex = 26;
+            this.NameBox.Text = "Alpha";
+            this.NameBox.TextChanged += new System.EventHandler(this.NameBox_TextChanged);
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button2.Location = new System.Drawing.Point(113, 395);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(249, 23);
+            this.button2.TabIndex = 27;
+            this.button2.Text = "Laadi sobivad andmed praegusest juurutusfailist";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // RightClickTimer
+            // 
+            this.RightClickTimer.Enabled = true;
+            this.RightClickTimer.Interval = 50;
+            this.RightClickTimer.Tick += new System.EventHandler(this.RightClickTimer_Tick);
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 5000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
