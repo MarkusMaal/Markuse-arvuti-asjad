@@ -21,8 +21,8 @@ namespace Markuse_arvuti_lukustamissüsteem
     public partial class MainWindow : Window
     {
         readonly bool userEnvironment = false;
-        readonly string[] whitelistedHashes = { "B881FBAB5E73D3984F2914FAEA743334D1B94DFFE98E8E1C4C8C412088D2C9C2" };
-        readonly bool dev = true;
+        readonly string[] whitelistedHashes = { "B881FBAB5E73D3984F2914FAEA743334D1B94DFFE98E8E1C4C8C412088D2C9C2", "A0B93B23301FC596789F83249A99F507A9DA5CBA9D636E4D4F88676F530224CB" };
+        readonly bool dev = false;
         string masRoot = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\";
         Color scheme = Color.FromArgb(255, 255, 255, 255);
         Color textScheme = Color.FromArgb(255, 0, 0, 0);
