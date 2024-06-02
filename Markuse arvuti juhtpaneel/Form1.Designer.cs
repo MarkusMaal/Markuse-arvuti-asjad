@@ -1649,11 +1649,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(913, 637);
+            this.ClientSize = new System.Drawing.Size(913, 642);
+            this.Controls.Add(this.pageSelect_1);
             this.Controls.Add(this.pageSelect_4);
             this.Controls.Add(this.pageSelect_3);
             this.Controls.Add(this.pageSelect_2);
-            this.Controls.Add(this.pageSelect_1);
             this.Controls.Add(this.button14);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.closeButton);

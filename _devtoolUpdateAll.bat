@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion EnableExtensions
-set "exclude=JTR Markuse asjade teenus Mâ€lupulga varundamiskeskus Pidu Markuse asjade juurutamise tâ€â€riist Markuse arvuti kohtvÃ¤rk"
+set "exclude=JTR Markuse asjade teenus M„lupulga varundamiskeskus Pidu Markuse asjade juurutamise t””riist Markuse arvuti kohtvärk Markuse arvuti integratsioonitarkvara Markuse arvuti juhtpaneel T””lauaM„rkmed"
 echo Stage 1: Stopping any active processes...
 echo ----------------------------------------------------
 call _devtoolKillAll.bat
