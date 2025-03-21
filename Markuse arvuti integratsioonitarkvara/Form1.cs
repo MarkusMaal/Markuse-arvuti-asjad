@@ -13,6 +13,7 @@ using System.Management;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Globalization;
 
 namespace Markuse_arvuti_integratsioonitarkvara
 {
@@ -1160,13 +1161,82 @@ namespace Markuse_arvuti_integratsioonitarkvara
             Applytheme(Color.SpringGreen, Color.Black);
         }
 
+        /// <summary>
+        /// Builds a script that displays all Java binaries and versions for your system and marks it executable (Unix-like systems)
+        /// </summary>
+        private void BuildJavaFinder()
+        {
+            if (!File.Exists(Program.root + "/find_java.bat"))
+            {
+
+                var builder = new StringBuilder();
+                var javaFinder = new StringWriter(builder)
+                {
+                    NewLine = "\r\n"
+                };
+                javaFinder.WriteLine("@echo off");
+                javaFinder.WriteLine("setlocal EnableDelayedExpansion");
+                javaFinder.WriteLine("for /f \"delims=\" %%a in ('where java') do (");
+                javaFinder.WriteLine("\tset \"javaPath=\"%%a\"\"");
+                javaFinder.WriteLine("\tfor /f \"tokens=3\" %%V in ('%%javaPath%% -version 2^>^&1 ^| findstr /i \"version\"') do (");
+                javaFinder.WriteLine("\t\tset \"version=%%V\"");
+                javaFinder.WriteLine("\t\tset \"version=!version:\"=!\"");
+                javaFinder.WriteLine("\t\techo !javaPath:\"=!:!version!");
+                javaFinder.WriteLine("\t)");
+                javaFinder.WriteLine(")");
+                javaFinder.WriteLine("endlocal");
+                javaFinder.WriteLine("exit/b");
+                File.WriteAllText(Program.root + "/find_java.bat", builder.ToString(), Encoding.ASCII);
+            }
+        }
+
+        /// <summary>
+        /// Finds the latest version of Java installed on your system, since if you install the Java SE version, Verifile may not work with it.
+        /// </summary>
+        /// <returns>Path to the latest Java binary found on your system</returns>
+        private string FindJava()
+        {
+            CultureInfo culture = CultureInfo.CurrentCulture;
+            string p = culture.NumberFormat.NumberDecimalSeparator;
+            string latest_version = $"0{p}0";
+            string latest_path = "";
+            string interpreter = "cmd";
+            Process pr = new Process()
+            {
+                StartInfo = new ProcessStartInfo()
+                {
+                    FileName = interpreter,
+                    Arguments = "/c \"" + Program.root + "\\find_java.bat\"",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                }
+            };
+            pr.Start();
+            while (!pr.StandardOutput.EndOfStream)
+            {
+                string[] path_version = (pr.StandardOutput.ReadLine() ?? ":").Replace(":\\", "_WINDRIVE\\").Split(':');
+                string path = path_version[0].Replace("_WINDRIVE\\", ":\\");
+                string version = path_version[1].Split('_')[0];
+                version = version.Split('.')[0] + p + version.Split('.')[1];
+                if (double.Parse(version, NumberStyles.Any) > double.Parse(latest_version, NumberStyles.Any))
+                {
+                    latest_path = path;
+                    latest_version = version;
+                }
+            }
+            return latest_path;
+        }
+
         private string Verifile2()
         {
+            BuildJavaFinder();
             Process p = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "java",
+                    FileName = FindJava(),
                     Arguments = "-jar " + Program.root + "\\verifile2.jar",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,

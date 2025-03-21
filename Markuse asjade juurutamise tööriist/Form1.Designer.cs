@@ -63,9 +63,9 @@
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label2.Location = new System.Drawing.Point(95, 514);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(128, 19);
+            this.label2.Size = new System.Drawing.Size(183, 19);
             this.label2.TabIndex = 2;
-            this.label2.Text = "juurutamise tööriist";
+            this.label2.Text = "juurutamise tööriist (pärand)";
             // 
             // label3
             // 

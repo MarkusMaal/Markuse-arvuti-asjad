@@ -5,6 +5,8 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Markuse_arvuti_lukustamissüsteem</RootNamespace>
     <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>mas.ico</ApplicationIcon>

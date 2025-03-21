@@ -37,8 +37,25 @@ namespace Markuse_asjade_juurutamise_tööriist
             RegistryKey wineKey = Registry.LocalMachine.OpenSubKey(@"Software\Wine", false);
             if (wineKey != null)
             {
+                musicLoop.Enabled = false;
+                actionWaitTimer.Enabled = false;
                 MessageBox.Show("Markuse arvuti asjade juurutamistarkvara ei käivitu Wine all. Palun käivitage see programm Windows-is.");
+                canClose = true;
+                this.Close();
                 return;
+            }
+            if (File.Exists(Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\verifile2.dat"))
+            {
+                musicLoop.Enabled = false;
+                actionWaitTimer.Enabled = false;
+                if (MessageBox.Show("See arvuti on juba juurutatud Verifile 2.0 räsiga. See programm ei ole võimeline neid räsisid genereerima. Enne kui jätkate, avage Verifile 2.0 käivitades käsureal:\n\njava -jar \"" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.mas\\verifile.jar\" -w\n\nSeejärel vajutage \"Jah\", et jätkata. Vajutage \"Ei\", et toiming katkestada. Pärast programmi sulgemist, looge uus fail nimega \"vf2.done\" Markuse asjade juurkausta, et Verifile 2.0 uuesti sulgeda.", "Tähelepanu!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                {
+                    canClose = true;
+                    this.Close();
+                    return;
+                }
+                actionWaitTimer.Enabled = true;
+                musicLoop.Enabled = true;
             }
 
             if (this.Width < 574)

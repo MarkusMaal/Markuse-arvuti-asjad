@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion EnableExtensions
-set "exclude=JTR Markuse asjade teenus M„lupulga varundamiskeskus Pidu Markuse asjade juurutamise t””riist Markuse arvuti kohtvärk Markuse arvuti integratsioonitarkvara Markuse arvuti juhtpaneel T””lauaM„rkmed"
+set "exclude=JTR Markuse asjade teenus M„lupulga varundamiskeskus Pidu Markuse arvuti kohtvärk Markuse arvuti integratsioonitarkvara Markuse arvuti juhtpaneel T””lauaM„rkmed"
 echo Stage 1: Stopping any active processes...
 echo ----------------------------------------------------
 call _devtoolKillAll.bat
@@ -18,12 +18,10 @@ for /f "delims=" %%a in ('dir /b') do (
 		)
 	)
 	
-	if exist "!realdir!\bin\Release\net8.0-windows\!realdir!.exe" (
+	if exist "!realdir!\bin\Release\net8.0-windows\publish\win-x86\!realdir!.exe" (
 		if "!exclude:%%a=!"=="!exclude!" (
 			echo Copying !realdir!...
-			copy "!realdir!\bin\Release\net8.0-windows\!realdir!.exe" "%homedrive%\mas\Markuse asjad\!realdir!.exe" /y >nul
-			copy "!realdir!\bin\Release\net8.0-windows\!realdir!.exe" "%homedrive%\mas\Markuse asjad\!realdir!.dll" /y >nul
-			copy "!realdir!\bin\Release\net8.0-windows\!realdir!.exe" "%homedrive%\mas\Markuse asjad\!realdir!.runtimeconfig.json" /y >nul
+			copy "!realdir!\bin\Release\net8.0-windows\publish\win-x86\!realdir!.exe" "%homedrive%\mas\Markuse asjad\!realdir!.exe" /y >nul
 		) else (
 			echo Skipped !realdir!
 		)
@@ -34,6 +32,8 @@ echo Stage 3: Reloading mas backend...
 echo ----------------------------------------------------
 echo Attempting to launch "%homedrive%\mas\Markuse asjad\Markuse arvuti integratsioonitarkvara.exe"...
 start "" "%homedrive%\mas\Markuse asjad\Markuse arvuti integratsioonitarkvara.exe"
+echo Attempting to launch "%homedrive%\mas\Markuse asjad\DesktopIcons.exe"...
+if exist "%homedrive%\mas\Markuse asjad\DesktopIcons.exe" start "" "%homedrive%\mas\Markuse asjad\DesktopIcons.exe"
 echo.
 echo * Finished^^! *
 pause

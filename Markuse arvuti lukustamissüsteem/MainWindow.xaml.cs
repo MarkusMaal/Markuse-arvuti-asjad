@@ -21,7 +21,7 @@ namespace Markuse_arvuti_lukustamissüsteem
     public partial class MainWindow : Window
     {
         readonly bool userEnvironment = false;
-        readonly string[] whitelistedHashes = { "B881FBAB5E73D3984F2914FAEA743334D1B94DFFE98E8E1C4C8C412088D2C9C2", "A0B93B23301FC596789F83249A99F507A9DA5CBA9D636E4D4F88676F530224CB", "B08AABB1ED294D8292FDCB2626D4B77C0A53CB4754F3234D8E761E413289057F" };
+        readonly string[] whitelistedHashes = { "B881FBAB5E73D3984F2914FAEA743334D1B94DFFE98E8E1C4C8C412088D2C9C2", "A0B93B23301FC596789F83249A99F507A9DA5CBA9D636E4D4F88676F530224CB", "B08AABB1ED294D8292FDCB2626D4B77C0A53CB4754F3234D8E761E413289057F", "8076CF7C156D44472420C1225B9F6ADB661E3B095E29E52E3D4E8598BB399A8F" };
         readonly bool dev = false;
         string masRoot = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\mas\\";
         Color scheme = Color.FromArgb(255, 255, 255, 255);
@@ -223,7 +223,7 @@ namespace Markuse_arvuti_lukustamissüsteem
             this.textScheme = Color.FromArgb(255, byte.Parse(colors2[0]), byte.Parse(colors2[1]), byte.Parse(colors2[2]));
             this.Background = new SolidColorBrush(this.scheme);
             this.Foreground = new SolidColorBrush(this.textScheme);
-            this.MainWindow1.Background = new ImageBrush(new BitmapImage(new Uri(masRoot + "bg_common.png")));
+            this.MainWindow1.Background = new ImageBrush(new BitmapImage(new Uri(masRoot + "bg_common.png"))) { Stretch = Stretch.UniformToFill }; 
             this.BottomLabel.Foreground = new SolidColorBrush(this.textScheme);
             this.TestModeLabel.Foreground = new SolidColorBrush(this.textScheme);
             this.CenterText.Foreground = new SolidColorBrush(this.textScheme);
@@ -258,13 +258,115 @@ namespace Markuse_arvuti_lukustamissüsteem
             return true;
         }
 
+
+        /// <summary>
+        /// Builds a script that displays all Java binaries and versions for your system and marks it executable (Unix-like systems)
+        /// </summary>
+        private void BuildJavaFinder()
+        {
+            if (!File.Exists(masRoot + "/find_java" + (OperatingSystem.IsWindows() ? ".bat" : ".sh")))
+            {
+
+                var builder = new StringBuilder();
+                using var javaFinder = new StringWriter(builder)
+                {
+                    NewLine = OperatingSystem.IsWindows() ? "\r\n" : "\n"
+                };
+                if (OperatingSystem.IsWindows())
+                {
+                    javaFinder.WriteLine("@echo off");
+                    javaFinder.WriteLine("setlocal EnableDelayedExpansion");
+                    javaFinder.WriteLine("for /f \"delims=\" %%a in ('where java') do (");
+                    javaFinder.WriteLine("\tset \"javaPath=\"%%a\"\"");
+                    javaFinder.WriteLine("\tfor /f \"tokens=3\" %%V in ('%%javaPath%% -version 2^>^&1 ^| findstr /i \"version\"') do (");
+                    javaFinder.WriteLine("\t\tset \"version=%%V\"");
+                    javaFinder.WriteLine("\t\tset \"version=!version:\"=!\"");
+                    javaFinder.WriteLine("\t\techo !javaPath:\"=!:!version!");
+                    javaFinder.WriteLine("\t)");
+                    javaFinder.WriteLine(")");
+                    javaFinder.WriteLine("endlocal");
+                    javaFinder.WriteLine("exit/b");
+                }
+                else if (OperatingSystem.IsLinux())
+                {
+                    javaFinder.WriteLine("#!/usr/bin/bash");
+                }
+                else if (OperatingSystem.IsMacOS())
+                {
+                    javaFinder.WriteLine("#!/bin/bash");
+                }
+                if (!OperatingSystem.IsWindows())
+                {
+                    javaFinder.WriteLine("OLDIFS=$IFS");
+                    javaFinder.WriteLine("IFS=:");
+                    javaFinder.WriteLine("for dir in $PATH; do");
+                    javaFinder.WriteLine("    if [[ -x \"$dir/java\" ]]; then  # Check if java exists and is executable");
+                    javaFinder.WriteLine("        javaPath=\"$dir/java\"");
+                    javaFinder.WriteLine("        version=$(\"$javaPath\" -version 2>&1 | awk -F '\"' '/version/ {print $2}')");
+                    javaFinder.WriteLine("        echo \"$javaPath:$version\"");
+                    javaFinder.WriteLine("    fi");
+                    javaFinder.WriteLine("done");
+                    javaFinder.WriteLine("IFS=$OLDIFS");
+                }
+                File.WriteAllText(masRoot + "/find_java" + (OperatingSystem.IsWindows() ? ".bat" : ".sh"), builder.ToString(), Encoding.ASCII);
+                if (!OperatingSystem.IsWindows())
+                {
+                    File.SetUnixFileMode(masRoot + "/find_java.sh", UnixFileMode.UserRead | UnixFileMode.UserExecute | UnixFileMode.UserWrite);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Finds the latest version of Java installed on your system, since if you install the Java SE version, Verifile may not work with it.
+        /// </summary>
+        /// <returns>Path to the latest Java binary found on your system</returns>
+        private string FindJava()
+        {
+            CultureInfo culture = CultureInfo.CurrentCulture;
+            string p = culture.NumberFormat.NumberDecimalSeparator;
+            string latest_version = $"0{p}0";
+            string latest_path = "";
+            string interpreter = OperatingSystem.IsWindows() ? "cmd" : "bash";
+            if (OperatingSystem.IsWindows())
+            {
+                masRoot = masRoot.Replace("/", "\\");
+            }
+            Process pr = new()
+            {
+                StartInfo = new ProcessStartInfo()
+                {
+                    FileName = interpreter,
+                    Arguments = (OperatingSystem.IsWindows() ? "/c " : "") + "\"" + masRoot + (OperatingSystem.IsWindows() ? "\\" : "/") + "find_java." + (OperatingSystem.IsWindows() ? "bat" : "sh") + "\"",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                }
+            };
+            pr.Start();
+            while (!pr.StandardOutput.EndOfStream)
+            {
+                string[] path_version = (pr.StandardOutput.ReadLine() ?? ":").Replace(":\\", "_WINDRIVE\\").Split(':');
+                string path = path_version[0].Replace("_WINDRIVE\\", ":\\");
+                string version = path_version[1].Split('_')[0];
+                version = version.Split('.')[0] + p + version.Split('.')[1];
+                if (double.Parse(version, NumberStyles.Any) > double.Parse(latest_version, NumberStyles.Any))
+                {
+                    latest_path = path;
+                    latest_version = version;
+                }
+            }
+            return latest_path;
+        }
+
         private string Verifile2()
         {
+            BuildJavaFinder();
             Process p = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "java",
+                    FileName = FindJava(),
                     Arguments = "-jar " + masRoot + "verifile2.jar",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
@@ -354,6 +456,17 @@ namespace Markuse_arvuti_lukustamissüsteem
                 passHash = sb.ToString().ToLower();
             }
             ClockTick();
+            if (this.Width / this.Height > 3.0)
+            {
+                double wide = this.Width;
+                double high = this.Height;
+                this.ResizeMode = ResizeMode.NoResize;
+                this.WindowState = WindowState.Normal;
+                this.WindowStyle = WindowStyle.None;
+                this.Left = wide / 4; this.Top = 0;
+                this.Width = wide / 2;
+                this.Height = high - 13;
+            }
         }
 
         public static byte[] StringToByteArray(string hex)
